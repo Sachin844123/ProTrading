@@ -1,0 +1,213 @@
+/* Reset default margins and ensure full-page layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', serif;
+}
+
+body {
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Background Video Styling */
+#vid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.7);
+}
+
+/* Form Container */
+#main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    min-height: 600px;
+    width: 420px;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 30px;
+    box-shadow: 0 0 25px rgba(31, 26, 113, 0.3);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#main:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 30px rgba(31, 26, 113, 0.5);
+}
+
+/* Heading */
+h1 {
+    color: white;
+    font-size: 2.2em;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    height: 45px;
+    margin-top: 15px;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 10px 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #1F1A71;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(31, 26, 113, 0.3);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: normal;
+    font-size: 15px;
+}
+
+/* Role Dropdown */
+#role {
+    width: 100%;
+    height: 45px;
+    margin-top: 15px;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 10px 15px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#role:focus {
+    border-color: #1F1A71;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(31, 26, 113, 0.3);
+}
+
+/* Dropdown Options */
+#role option {
+    color: #333;
+    background-color: white;
+    padding: 10px;
+}
+
+/* Buttons */
+button {
+    background-color: #1F1A71;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+button:hover:before {
+    left: 100%;
+}
+
+button:hover {
+    background-color: #2a2396;
+    box-shadow: 0 0 20px rgba(31, 26, 113, 0.5);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Login/Signup Link Styling */
+.login-link, .signup-link {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.login-link p, .signup-link p {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+    #main {
+        width: 90%;
+        height: auto;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px 24px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    input, #role {
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    #main {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.6em;
+    }
+}

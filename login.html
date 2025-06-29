@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <video src="v.mp4" id="vid" autoplay loop muted playsinline></video>
+    <div id="main">
+        <form action="login.php" method="POST">
+            <h1>Login</h1>
+            <input type="email" placeholder="Enter Your E-mail" name="email" required id="mail">
+            <div style="position: relative;">
+                <input type="password" placeholder="Password" name="password" required id="pass">
+                <i class="fas fa-eye" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: white;"></i>
+            </div>
+            
+            <button type="submit">Login</button>
+
+            <div class="forgot-password">
+                <a href="#"><h4>Forgot Password?</h4></a>
+            </div>
+            
+            <div class="signup-link">
+                <p>Don't have an account?</p>
+                <a href="register.html" ><button type="button" id="register">Create Account</button></a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#pass');
+
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoPro Trading Platform</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; margin: 0; }
+        .header { height: 70px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; align-items: center; padding: 0 24px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; font-weight: 700; color: #6366f1; }
+        .main-nav { margin-left: 40px; flex: 1; }
+        .main-nav ul { display: flex; list-style: none; gap: 5px; }
+        .main-nav a { display: flex; align-items: center; gap: 8px; padding: 10px 15px; color: #64748b; text-decoration: none; border-radius: 6px; transition: all 0.2s; }
+        .main-nav a:hover { background: #f8fafc; color: #1e293b; }
+        .main-nav li.active a { background: #6366f1; color: #fff; }
+        .user-controls { display: flex; align-items: center; gap: 20px; }
+        .notifications { position: relative; cursor: pointer; }
+        .notifications i { font-size: 1.2rem; color: #64748b; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: #fff; font-size: 0.7rem; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .settings-btn { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f8fafc; cursor: pointer; transition: all 0.2s; }
+        .settings-btn:hover { background: #e2e8f0; transform: rotate(90deg); }
+        .settings-btn i { font-size: 1.1rem; color: #64748b; }
+        .settings-btn:hover i { color: #6366f1; }
+        .user-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 8px 12px; border-radius: 6px; transition: all 0.2s; }
+        .user-profile:hover { background: #f8fafc; }
+        .avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        .dashboard-header { margin-top: 90px; padding: 24px; }
+        .dashboard-header h1 { font-size: 2rem; margin-bottom: 5px; }
+        .dashboard-header .subtitle { color: #64748b; font-size: 1rem; }
+        .dashboard-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin: 24px 0; }
+        .dashboard-card { background: #fff; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 24px; display: flex; flex-direction: column; align-items: flex-start; }
+        .dashboard-card .label { color: #64748b; font-size: 1rem; margin-bottom: 8px; }
+        .dashboard-card .value { font-size: 2rem; font-weight: 700; color: #1e293b; }
+        .dashboard-card .crypto { color: #6366f1; }
+        .crypto-selector { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .crypto-tab { padding: 8px 16px; background: #f1f5f9; border: none; border-radius: 20px; color: #64748b; cursor: pointer; transition: all 0.2s; }
+        .crypto-tab.active { background: #6366f1; color: #fff; }
+        .crypto-tab:hover { background: #e2e8f0; }
+        .crypto-tab.active:hover { background: #6366f1; }
+        
+        /* Mobile Navigation Styles */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: #f8fafc;
+            color: #6366f1;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            z-index: 99;
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .mobile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .mobile-menu li.active a {
+            background: #6366f1;
+            color: #fff;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .user-controls {
+                gap: 12px;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .crypto-selector {
+                justify-content: center;
+            }
+            
+            .crypto-tab {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 0 16px;
+            }
+            
+            .dashboard-header {
+                padding: 16px;
+            }
+            
+            .main-content {
+                padding: 0 16px !important;
+            }
+            
+            .crypto-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .crypto-tab {
+                text-align: center;
+            }
+            
+            /* Mobile trading controls */
+            .trading-controls {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .trading-controls > div {
+                width: 100%;
+            }
+            
+            .trading-controls button {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            /* Mobile crypto grid */
+            #crypto-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Mobile chart */
+            #crypto-chart {
+                height: 200px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-coins"></i>
+            <span>CryptoPro</span>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-chart-area"></i> Charts</a></li>
+                <li><a href="#"><i class="fas fa-history"></i> History</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user-controls">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            <div class="settings-btn" id="settings-btn">
+                <i class="fas fa-cog"></i>
+            </div>
+            <div class="user-profile">
+                <img src="/api/placeholder/32/32" alt="User Profile" class="avatar">
+                <span>Trader</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-chart-area"></i> Charts</a></li>
+            <li><a href="#"><i class="fas fa-history"></i> History</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="#"><i class="fas fa-coins"></i> Portfolio</a></li>
+            <li><a href="#"><i class="fas fa-exchange-alt"></i> Trading</a></li>
+        </ul>
+    </div>
+
+    <div class="dashboard-header">
+        <h1>Cryptocurrency Trading Dashboard</h1>
+        <p class="subtitle">Monitor and trade multiple cryptocurrencies in real time</p>
+    </div>
+    
+    <!-- Crypto Selector -->
+    <div style="padding: 0 24px;">
+        <div class="crypto-selector">
+            <button class="crypto-tab active" data-crypto="BTC">
+                <i class="fab fa-btc"></i> Bitcoin
+            </button>
+            <button class="crypto-tab" data-crypto="ETH">
+                <i class="fab fa-ethereum"></i> Ethereum
+            </button>
+            <button class="crypto-tab" data-crypto="ADA">
+                <i class="fas fa-coins"></i> Cardano
+            </button>
+            <button class="crypto-tab" data-crypto="SOL">
+                <i class="fas fa-bolt"></i> Solana
+            </button>
+            <button class="crypto-tab" data-crypto="DOT">
+                <i class="fas fa-circle"></i> Polkadot
+            </button>
+            <button class="crypto-tab" data-crypto="LINK">
+                <i class="fas fa-link"></i> Chainlink
+            </button>
+        </div>
+    </div>
+    
+    <div class="dashboard-cards">
+        <div class="dashboard-card">
+            <span class="label">Cash Balance</span>
+            <span class="value" id="crypto-balance">$100,000.00</span>
+        </div>
+        <div class="dashboard-card">
+            <span class="label">Total Crypto Holdings</span>
+            <span class="value crypto" id="crypto-holdings">0.0000</span>
+        </div>
+        <div class="dashboard-card">
+            <span class="label">Portfolio Value</span>
+            <span class="value" id="crypto-portfolio-value">$0.00</span>
+        </div>
+        <div class="dashboard-card">
+            <span class="label">24h Change</span>
+            <span class="value" id="crypto-24h-change">+0.00%</span>
+        </div>
+    </div>
+
+    <div class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <!-- Selected Crypto Chart -->
+        <section style="background: #fff; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 24px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h2 style="color: #6366f1; margin: 0;">
+                    <i class="crypto-icon" id="selected-crypto-icon"></i> 
+                    <span id="selected-crypto-name">Bitcoin</span> Price Chart
+                </h2>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="text-align: right;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #1e293b;" id="current-crypto-price">$30,000</div>
+                        <div style="font-size: 0.9rem; color: #10b981;" id="crypto-price-change">+2.5%</div>
+                    </div>
+                </div>
+            </div>
+            <canvas id="crypto-chart" height="120"></canvas>
+        </section>
+
+        <!-- Trading Controls -->
+        <section style="background: #fff; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 24px; margin-bottom: 24px;">
+            <h2 style="margin-bottom: 16px;"><i class="fas fa-exchange-alt"></i> Trade <span id="trading-crypto-name">Bitcoin</span></h2>
+            <div class="trading-controls" style="display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 180px;">
+                    <label for="crypto-amount" style="color: #64748b;">Amount (USD)</label>
+                    <input type="number" id="crypto-amount" placeholder="1000" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 1rem; margin-bottom: 8px;">
+                </div>
+                <button class="btn-primary" id="crypto-buy-btn" style="background: #10b981; color: #fff; padding: 12px 24px; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600;">
+                    <i class="fas fa-arrow-up"></i> Buy
+                </button>
+                <button class="btn-primary" id="crypto-sell-btn" style="background: #ef4444; color: #fff; padding: 12px 24px; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600;">
+                    <i class="fas fa-arrow-down"></i> Sell
+                </button>
+                <button class="btn-secondary" id="crypto-advanced-btn" style="background: #475569; color: #fff; padding: 12px 24px; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600;">
+                    <i class="fas fa-cog"></i> Advanced
+                </button>
+            </div>
+        </section>
+
+        <!-- All Cryptocurrencies Grid -->
+        <section style="background: #fff; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 24px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0;"><i class="fas fa-coins"></i> All Cryptocurrencies</h2>
+                <div style="display: flex; gap: 12px;">
+                    <input type="text" id="crypto-search" placeholder="Search cryptocurrencies..." style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem;">
+                    <select id="crypto-sort" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem;">
+                        <option value="name">Name</option>
+                        <option value="price">Price</option>
+                        <option value="change">24h Change</option>
+                    </select>
+                </div>
+            </div>
+            <div id="crypto-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+                <!-- Crypto cards will be populated here -->
+            </div>
+        </section>
+
+        <!-- Open Positions Section -->
+        <section style="background: #fff; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 24px; margin-bottom: 24px;">
+            <h2 style="margin-bottom: 16px;"><i class="fas fa-layer-group"></i> Open Positions</h2>
+            <div id="crypto-positions-list">
+                <div style="text-align: center; color: #64748b; padding: 32px 0;">
+                    <i class="fas fa-folder-open" style="font-size: 2rem;"></i>
+                    <p>No open positions yet</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Trading Modal (hidden by default) -->
+    <div id="crypto-trade-modal" class="modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(30,41,59,0.7); z-index:1000; align-items:center; justify-content:center;">
+        <div class="modal-content" style="background:#fff; border-radius:12px; max-width:500px; margin:auto; padding:24px; position:relative;">
+            <button id="crypto-modal-close" style="position:absolute; top:12px; right:12px; background:none; border:none; font-size:1.2rem; color:#64748b; cursor:pointer;"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:16px;">Advanced <span id="modal-crypto-name">Bitcoin</span> Trade</h3>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:8px; color:#64748b;">Trade Type</label>
+                <div style="display:flex; gap:8px;">
+                    <button id="adv-buy-btn" style="flex:1; padding:10px; background:#10b981; color:#fff; border:none; border-radius:6px; font-weight:600;">Buy</button>
+                    <button id="adv-sell-btn" style="flex:1; padding:10px; background:#ef4444; color:#fff; border:none; border-radius:6px; font-weight:600;">Sell</button>
+                </div>
+            </div>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:8px; color:#64748b;">Amount (USD)</label>
+                <input type="number" id="adv-amount" placeholder="1000" style="width:100%; padding:10px; border-radius:6px; border:1px solid #e2e8f0; font-size:1rem;">
+            </div>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:8px; color:#64748b;">Stop Loss (USD)</label>
+                <input type="number" id="adv-stop-loss" placeholder="Optional" style="width:100%; padding:10px; border-radius:6px; border:1px solid #e2e8f0; font-size:1rem;">
+            </div>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:8px; color:#64748b;">Take Profit (USD)</label>
+                <input type="number" id="adv-take-profit" placeholder="Optional" style="width:100%; padding:10px; border-radius:6px; border:1px solid #e2e8f0; font-size:1rem;">
+            </div>
+            
+            <div style="background:#f8fafc; padding:16px; border-radius:8px; margin-bottom:20px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="color:#64748b;">Current Price:</span>
+                    <span style="font-weight:600;" id="modal-current-price">$30,000</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="color:#64748b;">Crypto Amount:</span>
+                    <span id="adv-crypto-amount" style="font-weight:600;">0.0000</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#64748b;">Total Cost:</span>
+                    <span id="adv-total-cost" style="font-weight:600;">$0.00</span>
+                </div>
+            </div>
+            
+            <div style="display:flex; gap:12px;">
+                <button id="adv-cancel" style="flex:1; padding:12px; background:#64748b; color:#fff; border:none; border-radius:6px; font-weight:600;">Cancel</button>
+                <button id="adv-execute" style="flex:1; padding:12px; background:#6366f1; color:#fff; border:none; border-radius:6px; font-weight:600;">Execute Trade</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal (hidden by default) -->
+    <div id="crypto-settings-modal" class="modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(30,41,59,0.7); z-index:1000; align-items:center; justify-content:center;">
+        <div class="modal-content" style="background:#fff; border-radius:12px; max-width:400px; margin:auto; padding:24px; position:relative;">
+            <button id="crypto-settings-close" style="position:absolute; top:12px; right:12px; background:none; border:none; font-size:1.2rem; color:#64748b; cursor:pointer;"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:16px;">Settings</h3>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:8px; color:#64748b;">Default Trade Amount (USD)</label>
+                <input type="number" id="settings-amount" value="1000" style="width:100%; padding:10px; border-radius:6px; border:1px solid #e2e8f0; font-size:1rem;">
+            </div>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:flex; align-items:center; gap:8px; color:#64748b;">
+                    <input type="checkbox" id="settings-notifications" checked>
+                    Enable Notifications
+                </label>
+            </div>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:flex; align-items:center; gap:8px; color:#64748b;">
+                    <input type="checkbox" id="settings-sound">
+                    Sound Alerts
+                </label>
+            </div>
+            
+            <div style="display:flex; gap:12px;">
+                <button id="settings-cancel" style="flex:1; padding:12px; background:#64748b; color:#fff; border:none; border-radius:6px; font-weight:600;">Cancel</button>
+                <button id="settings-save" style="flex:1; padding:12px; background:#6366f1; color:#fff; border:none; border-radius:6px; font-weight:600;">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Cryptocurrency data
+    const cryptocurrencies = {
+        BTC: { name: 'Bitcoin', icon: 'fab fa-btc', color: '#f7931a', basePrice: 30000 },
+        ETH: { name: 'Ethereum', icon: 'fab fa-ethereum', color: '#627eea', basePrice: 2000 },
+        ADA: { name: 'Cardano', icon: 'fas fa-coins', color: '#0033ad', basePrice: 0.5 },
+        SOL: { name: 'Solana', icon: 'fas fa-bolt', color: '#14f195', basePrice: 100 },
+        DOT: { name: 'Polkadot', icon: 'fas fa-circle', color: '#e6007a', basePrice: 7 },
+        LINK: { name: 'Chainlink', icon: 'fas fa-link', color: '#2a5ada', basePrice: 15 }
+    };
+
+    // Global variables
+    let userPortfolio = {
+        balance: 100000,
+        holdings: {}, // { BTC: 0, ETH: 0, etc. }
+        positions: [],
+        totalPnL: 0
+    };
+    let userSettings = {
+        theme: 'light',
+        defaultAmount: 1000,
+        enableNotifications: true,
+        soundAlerts: false,
+        updateInterval: 30
+    };
+    let currentPrices = {};
+    let selectedCrypto = 'BTC';
+    let cryptoChart = null;
+    let priceUpdateInterval;
+
+    // Initialize prices
+    Object.keys(cryptocurrencies).forEach(symbol => {
+        currentPrices[symbol] = cryptocurrencies[symbol].basePrice;
+        userPortfolio.holdings[symbol] = 0;
+    });
+
+    // Load portfolio from localStorage
+    function loadPortfolio() {
+        const saved = localStorage.getItem('cryptoPortfolio');
+        return saved ? JSON.parse(saved) : userPortfolio;
+    }
+
+    // Save portfolio to localStorage
+    function savePortfolio() {
+        localStorage.setItem('cryptoPortfolio', JSON.stringify(userPortfolio));
+    }
+
+    // Load settings from localStorage
+    function loadSettings() {
+        const saved = localStorage.getItem('cryptoSettings');
+        return saved ? JSON.parse(saved) : userSettings;
+    }
+
+    // Save settings to localStorage
+    function saveSettings() {
+        localStorage.setItem('cryptoSettings', JSON.stringify(userSettings));
+    }
+
+    // Show notification
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed; top: 20px; right: 20px; padding: 15px 20px; 
+            background: #fff; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
+            display: flex; align-items: center; gap: 12px; transform: translateX(120%); 
+            transition: transform 0.3s ease; z-index: 1000; max-width: 350px;
+        `;
+        
+        let icon = 'info-circle';
+        if (type === 'success') icon = 'check-circle';
+        if (type === 'error') icon = 'exclamation-circle';
+        
+        notification.innerHTML = `
+            <i class="fas fa-${icon}" style="color: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#0ea5e9'};"></i>
+            <span style="flex: 1; color: #1e293b; font-size: 0.95rem;">${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => notification.style.transform = 'translateX(0)', 10);
+        setTimeout(() => {
+            notification.style.transform = 'translateX(120%)';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // Simulate real-time crypto price updates
+    function updateCryptoPrices() {
+        Object.keys(cryptocurrencies).forEach(symbol => {
+            const change = (Math.random() - 0.5) * 0.1; // ±5% change
+            const basePrice = cryptocurrencies[symbol].basePrice;
+            currentPrices[symbol] = Math.max(basePrice * 0.5, Math.min(basePrice * 2, currentPrices[symbol] * (1 + change)));
+        });
+        
+        updatePriceDisplay();
+        updatePortfolioValue();
+        updateCryptoGrid();
+        updateChart();
+    }
+
+    // Update price display for selected crypto
+    function updatePriceDisplay() {
+        const price = currentPrices[selectedCrypto];
+        const prevPrice = price * (1 + (Math.random() - 0.5) * 0.02); // Simulate previous price
+        const change = ((price - prevPrice) / prevPrice * 100).toFixed(2);
+        const changeColor = change >= 0 ? '#10b981' : '#ef4444';
+        
+        document.getElementById('current-crypto-price').textContent = `$${price.toLocaleString()}`;
+        document.getElementById('crypto-price-change').textContent = `${change >= 0 ? '+' : ''}${change}%`;
+        document.getElementById('crypto-price-change').style.color = changeColor;
+    }
+
+    // Update portfolio value
+    function updatePortfolioValue() {
+        let totalCryptoValue = 0;
+        let totalHoldings = 0;
+        
+        Object.keys(userPortfolio.holdings).forEach(symbol => {
+            const value = userPortfolio.holdings[symbol] * currentPrices[symbol];
+            totalCryptoValue += value;
+            totalHoldings += userPortfolio.holdings[symbol];
+        });
+        
+        const totalValue = userPortfolio.balance + totalCryptoValue;
+        
+        document.getElementById('crypto-balance').textContent = `$${userPortfolio.balance.toLocaleString()}`;
+        document.getElementById('crypto-portfolio-value').textContent = `$${totalValue.toLocaleString()}`;
+        document.getElementById('crypto-holdings').textContent = totalHoldings.toFixed(4);
+        
+        // Update P/L for open positions
+        let totalPnL = 0;
+        userPortfolio.positions.forEach(position => {
+            const positionPnL = calculatePositionPnL(position);
+            position.currentPnL = positionPnL;
+            totalPnL += positionPnL;
+        });
+        userPortfolio.totalPnL = totalPnL;
+        
+        updatePositionsDisplay();
+    }
+
+    // Calculate position P/L
+    function calculatePositionPnL(position) {
+        const currentPrice = currentPrices[position.symbol];
+        const multiplier = position.type === 'buy' ? 1 : -1;
+        return position.cryptoAmount * multiplier * (currentPrice - position.openPrice);
+    }
+
+    // Update chart with new price
+    function updateChart() {
+        if (!cryptoChart) return;
+        
+        const chartData = cryptoChart.data.datasets[0].data;
+        chartData.push(currentPrices[selectedCrypto]);
+        if (chartData.length > 50) chartData.shift();
+        
+        const labels = chartData.map((_, i) => `T-${chartData.length - i}`);
+        cryptoChart.data.labels = labels;
+        cryptoChart.update('none');
+    }
+
+    // Buy crypto function
+    function buyCrypto(symbol, amount) {
+        if (amount > userPortfolio.balance) {
+            showNotification('Insufficient funds!', 'error');
+            return;
+        }
+        
+        const cryptoAmount = amount / currentPrices[symbol];
+        userPortfolio.balance -= amount;
+        userPortfolio.holdings[symbol] += cryptoAmount;
+        
+        // Add to positions
+        userPortfolio.positions.push({
+            id: Date.now(),
+            symbol: symbol,
+            type: 'buy',
+            cryptoAmount: cryptoAmount,
+            usdAmount: amount,
+            openPrice: currentPrices[symbol],
+            timestamp: new Date().getTime(),
+            currentPnL: 0
+        });
+        
+        savePortfolio();
+        updatePortfolioValue();
+        showNotification(`Successfully bought ${cryptoAmount.toFixed(4)} ${symbol} for $${amount.toLocaleString()}`, 'success');
+    }
+
+    // Sell crypto function
+    function sellCrypto(symbol, amount) {
+        const cryptoAmount = amount / currentPrices[symbol];
+        if (cryptoAmount > userPortfolio.holdings[symbol]) {
+            showNotification(`Insufficient ${symbol} holdings!`, 'error');
+            return;
+        }
+        
+        userPortfolio.balance += amount;
+        userPortfolio.holdings[symbol] -= cryptoAmount;
+        
+        // Add to positions
+        userPortfolio.positions.push({
+            id: Date.now(),
+            symbol: symbol,
+            type: 'sell',
+            cryptoAmount: cryptoAmount,
+            usdAmount: amount,
+            openPrice: currentPrices[symbol],
+            timestamp: new Date().getTime(),
+            currentPnL: 0
+        });
+        
+        savePortfolio();
+        updatePortfolioValue();
+        showNotification(`Successfully sold ${cryptoAmount.toFixed(4)} ${symbol} for $${amount.toLocaleString()}`, 'success');
+    }
+
+    // Close position
+    function closePosition(positionId) {
+        const position = userPortfolio.positions.find(p => p.id === positionId);
+        if (!position) return;
+        
+        const pnl = position.currentPnL;
+        if (position.type === 'buy') {
+            userPortfolio.balance += position.usdAmount + pnl;
+            userPortfolio.holdings[position.symbol] -= position.cryptoAmount;
+        } else {
+            userPortfolio.balance += position.usdAmount + pnl;
+            userPortfolio.holdings[position.symbol] += position.cryptoAmount;
+        }
+        
+        userPortfolio.positions = userPortfolio.positions.filter(p => p.id !== positionId);
+        savePortfolio();
+        updatePortfolioValue();
+        
+        showNotification(`Position closed with ${pnl >= 0 ? 'profit' : 'loss'} of $${Math.abs(pnl).toFixed(2)}`, 
+            pnl >= 0 ? 'success' : 'info');
+    }
+
+    // Update positions display
+    function updatePositionsDisplay() {
+        const container = document.getElementById('crypto-positions-list');
+        
+        if (userPortfolio.positions.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; color: #64748b; padding: 32px 0;">
+                    <i class="fas fa-folder-open" style="font-size: 2rem;"></i>
+                    <p>No open positions yet</p>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = '';
+        userPortfolio.positions.forEach(position => {
+            const pnlColor = position.currentPnL >= 0 ? '#10b981' : '#ef4444';
+            const pnlIcon = position.currentPnL >= 0 ? 'fa-caret-up' : 'fa-caret-down';
+            const cryptoInfo = cryptocurrencies[position.symbol];
+            
+            const positionDiv = document.createElement('div');
+            positionDiv.style.cssText = `
+                display: flex; justify-content: space-between; align-items: center; 
+                padding: 16px; background: #f8fafc; border-radius: 8px; margin-bottom: 12px;
+            `;
+            
+            positionDiv.innerHTML = `
+                <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <i class="${cryptoInfo.icon}" style="color: ${cryptoInfo.color};"></i>
+                        <span style="font-weight: 600; color: #1e293b;">${position.symbol}</span>
+                        <span style="background: ${position.type === 'buy' ? '#10b981' : '#ef4444'}; color: #fff; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;">${position.type.toUpperCase()}</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #64748b;">
+                        ${position.cryptoAmount.toFixed(4)} ${position.symbol} @ $${position.openPrice.toLocaleString()}
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-weight: 600; color: ${pnlColor}; margin-bottom: 4px;">
+                        ${position.currentPnL >= 0 ? '+' : ''}$${position.currentPnL.toFixed(2)}
+                        <i class="fas ${pnlIcon}"></i>
+                    </div>
+                    <button onclick="closePosition(${position.id})" style="background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">Close</button>
+                </div>
+            `;
+            
+            container.appendChild(positionDiv);
+        });
+    }
+
+    // Update crypto grid
+    function updateCryptoGrid() {
+        const container = document.getElementById('crypto-grid');
+        container.innerHTML = '';
+        
+        Object.entries(cryptocurrencies).forEach(([symbol, info]) => {
+            const price = currentPrices[symbol];
+            const change = (Math.random() - 0.5) * 20; // Simulate 24h change
+            const changeColor = change >= 0 ? '#10b981' : '#ef4444';
+            const changeIcon = change >= 0 ? 'fa-caret-up' : 'fa-caret-down';
+            
+            const card = document.createElement('div');
+            card.style.cssText = `
+                background: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0;
+                cursor: pointer; transition: all 0.2s;
+            `;
+            card.onmouseenter = () => card.style.transform = 'translateY(-2px)';
+            card.onmouseleave = () => card.style.transform = 'translateY(0)';
+            card.onclick = () => selectCrypto(symbol);
+            
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <i class="${info.icon}" style="color: ${info.color}; font-size: 1.2rem;"></i>
+                        <div>
+                            <div style="font-weight: 600; color: #1e293b;">${info.name}</div>
+                            <div style="font-size: 0.8rem; color: #64748b;">${symbol}</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: 600; color: #1e293b;">$${price.toLocaleString()}</div>
+                        <div style="font-size: 0.8rem; color: ${changeColor};">
+                            ${change >= 0 ? '+' : ''}${change.toFixed(2)}%
+                            <i class="fas ${changeIcon}"></i>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="event.stopPropagation(); buyCrypto('${symbol}', 1000)" style="flex: 1; padding: 8px; background: #10b981; color: #fff; border: none; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">Buy</button>
+                    <button onclick="event.stopPropagation(); sellCrypto('${symbol}', 1000)" style="flex: 1; padding: 8px; background: #ef4444; color: #fff; border: none; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">Sell</button>
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+    }
+
+    // Select cryptocurrency
+    function selectCrypto(symbol) {
+        selectedCrypto = symbol;
+        const cryptoInfo = cryptocurrencies[symbol];
+        
+        // Update UI
+        document.getElementById('selected-crypto-icon').className = cryptoInfo.icon;
+        document.getElementById('selected-crypto-name').textContent = cryptoInfo.name;
+        document.getElementById('trading-crypto-name').textContent = cryptoInfo.name;
+        
+        // Update crypto selector tabs
+        document.querySelectorAll('.crypto-tab').forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.dataset.crypto === symbol) {
+                tab.classList.add('active');
+            }
+        });
+        
+        // Update chart
+        renderCryptoChart();
+        updatePriceDisplay();
+    }
+
+    // Chart.js setup for crypto price
+    function renderCryptoChart() {
+        const ctx = document.getElementById('crypto-chart').getContext('2d');
+        const cryptoInfo = cryptocurrencies[selectedCrypto];
+        const initialData = Array.from({length: 30}, () => currentPrices[selectedCrypto] * (0.95 + Math.random() * 0.1));
+        
+        if (cryptoChart) cryptoChart.destroy();
+        
+        cryptoChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: initialData.map((_, i) => `T-${initialData.length - i}`),
+                datasets: [{
+                    label: `${selectedCrypto}/USD`,
+                    data: initialData,
+                    borderColor: cryptoInfo.color,
+                    backgroundColor: `${cryptoInfo.color}20`,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { x: { display: false }, y: { beginAtZero: false } }
+            }
+        });
+    }
+
+    // Initialize everything
+    function initialize() {
+        // Load saved data
+        userPortfolio = loadPortfolio();
+        userSettings = loadSettings();
+        
+        // Initialize holdings if not exists
+        if (!userPortfolio.holdings) {
+            userPortfolio.holdings = {};
+            Object.keys(cryptocurrencies).forEach(symbol => {
+                userPortfolio.holdings[symbol] = 0;
+            });
+        }
+        
+        // Update initial display
+        updatePortfolioValue();
+        updateCryptoGrid();
+        
+        // Render chart
+        renderCryptoChart();
+        
+        // Start price updates
+        updateCryptoPrices();
+        priceUpdateInterval = setInterval(updateCryptoPrices, userSettings.updateInterval * 1000);
+        
+        // Event listeners
+        document.getElementById('crypto-buy-btn').onclick = function() {
+            const amount = parseFloat(document.getElementById('crypto-amount').value) || userSettings.defaultAmount;
+            buyCrypto(selectedCrypto, amount);
+        };
+        
+        document.getElementById('crypto-sell-btn').onclick = function() {
+            const amount = parseFloat(document.getElementById('crypto-amount').value) || userSettings.defaultAmount;
+            sellCrypto(selectedCrypto, amount);
+        };
+        
+        // Crypto selector tabs
+        document.querySelectorAll('.crypto-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                selectCrypto(this.dataset.crypto);
+            });
+        });
+        
+        // Search functionality
+        document.getElementById('crypto-search').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('#crypto-grid > div');
+            
+            cards.forEach(card => {
+                const cryptoName = card.querySelector('div').textContent.toLowerCase();
+                if (cryptoName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Advanced trade modal
+        document.getElementById('crypto-advanced-btn').onclick = openAdvancedModal;
+        document.getElementById('crypto-modal-close').onclick = () => document.getElementById('crypto-trade-modal').style.display = 'none';
+        document.getElementById('adv-cancel').onclick = () => document.getElementById('crypto-trade-modal').style.display = 'none';
+        
+        // Settings modal
+        document.getElementById('settings-btn').onclick = openSettingsModal;
+        document.getElementById('crypto-settings-close').onclick = () => document.getElementById('crypto-settings-modal').style.display = 'none';
+        document.getElementById('settings-cancel').onclick = () => document.getElementById('crypto-settings-modal').style.display = 'none';
+        
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            // Change icon based on menu state
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.className = 'fas fa-bars';
+            }
+        });
+        
+        // Close mobile menu when clicking on menu items
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.className = 'fas fa-bars';
+                
+                // Update active state
+                mobileMenu.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+                this.parentElement.classList.add('active');
+            });
+        });
+        
+        // Show welcome message
+        setTimeout(() => {
+            showNotification('Welcome to CryptoPro Trading Platform!', 'info');
+        }, 1000);
+    }
+
+    // Advanced trade modal functionality
+    function openAdvancedModal() {
+        const modal = document.getElementById('crypto-trade-modal');
+        const cryptoInfo = cryptocurrencies[selectedCrypto];
+        
+        // Update modal content
+        document.getElementById('modal-crypto-name').textContent = cryptoInfo.name;
+        document.getElementById('modal-current-price').textContent = `$${currentPrices[selectedCrypto].toLocaleString()}`;
+        
+        // Reset form
+        document.getElementById('adv-amount').value = '';
+        document.getElementById('adv-stop-loss').value = '';
+        document.getElementById('adv-take-profit').value = '';
+        document.getElementById('adv-crypto-amount').textContent = '0.0000';
+        document.getElementById('adv-total-cost').textContent = '$0.00';
+        
+        // Reset button states
+        document.getElementById('adv-buy-btn').style.background = '#10b981';
+        document.getElementById('adv-sell-btn').style.background = '#64748b';
+        
+        modal.style.display = 'flex';
+        
+        // Add event listeners
+        let selectedType = 'buy';
+        document.getElementById('adv-buy-btn').onclick = () => {
+            selectedType = 'buy';
+            document.getElementById('adv-buy-btn').style.background = '#10b981';
+            document.getElementById('adv-sell-btn').style.background = '#64748b';
+        };
+        document.getElementById('adv-sell-btn').onclick = () => {
+            selectedType = 'sell';
+            document.getElementById('adv-buy-btn').style.background = '#64748b';
+            document.getElementById('adv-sell-btn').style.background = '#ef4444';
+        };
+        
+        // Update calculations on amount change
+        document.getElementById('adv-amount').oninput = function() {
+            const amount = parseFloat(this.value) || 0;
+            const cryptoAmount = amount / currentPrices[selectedCrypto];
+            document.getElementById('adv-crypto-amount').textContent = `${cryptoAmount.toFixed(4)} ${selectedCrypto}`;
+            document.getElementById('adv-total-cost').textContent = `$${amount.toFixed(2)}`;
+        };
+        
+        // Execute trade
+        document.getElementById('adv-execute').onclick = function() {
+            const amount = parseFloat(document.getElementById('adv-amount').value);
+            if (!amount || amount <= 0) {
+                showNotification('Please enter a valid amount!', 'error');
+                return;
+            }
+            
+            if (selectedType === 'buy') {
+                buyCrypto(selectedCrypto, amount);
+            } else {
+                sellCrypto(selectedCrypto, amount);
+            }
+            
+            modal.style.display = 'none';
+        };
+    }
+
+    // Settings modal functionality
+    function openSettingsModal() {
+        const modal = document.getElementById('crypto-settings-modal');
+        
+        // Load current settings
+        document.getElementById('settings-amount').value = userSettings.defaultAmount;
+        document.getElementById('settings-notifications').checked = userSettings.enableNotifications;
+        document.getElementById('settings-sound').checked = userSettings.soundAlerts;
+        
+        modal.style.display = 'flex';
+        
+        // Save settings
+        document.getElementById('settings-save').onclick = function() {
+            userSettings.defaultAmount = parseInt(document.getElementById('settings-amount').value) || 1000;
+            userSettings.enableNotifications = document.getElementById('settings-notifications').checked;
+            userSettings.soundAlerts = document.getElementById('settings-sound').checked;
+            
+            saveSettings();
+            modal.style.display = 'none';
+            showNotification('Settings saved successfully!', 'success');
+        };
+    }
+
+    // Start the application
+    document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html> 

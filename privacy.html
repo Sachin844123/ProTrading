@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ProTrade Privacy Policy - Learn how we collect, use, and protect your personal information">
+    <title>Privacy Policy - ProTrade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0056b3;
+            --primary-light: #007bff;
+            --primary-dark: #1a1a2e;
+            --secondary: #6c757d;
+            --text-dark: #333;
+            --text-medium: #555;
+            --text-light: #777;
+            --background: #f8f9fa;
+            --background-alt: #eef1f5;
+            --white: #ffffff;
+            --border: #ddd;
+            --border-light: #eee;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text-medium);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px var(--shadow);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo svg {
+            width: 150px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .effective-date {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: var(--text-dark);
+            font-size: 22px;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            margin-bottom: 20px;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .highlight-box {
+            background-color: var(--background-alt);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .contact-section {
+            background-color: var(--background-alt);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .contact-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .table-of-contents {
+            background-color: var(--background-alt);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .table-of-contents h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .table-of-contents ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 10px;
+        }
+
+        .table-of-contents a {
+            text-decoration: none;
+            color: var(--text-medium);
+            transition: color 0.3s ease;
+        }
+
+        .table-of-contents a:hover {
+            color: var(--primary);
+        }
+
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 10h15c5.5 0 10 4.5 10 10s-4.5 10-10 10H25v10H20V10zm15 15c2.8 0 5-2.2 5-5s-2.2-5-5-5h-10v10h10zM55 10h5v25h15v5H55V10zM80 10h5v30h-5V10zM95 25V10h5v15c0 5.5 4.5 10 10 10s10-4.5 10-10V10h5v15c0 8.3-6.7 15-15 15s-15-6.7-15-15zM135 30h20v-5h-20v-5h20v-5h-20v-5h20v-5h-25v30h25v-5h-20z" fill="#0056b3"/>
+                    <path d="M165 10h15c5.5 0 10 4.5 10 10s-4.5 10-10 10h-10v10h-5V10zm15 15c2.8 0 5-2.2 5-5s-2.2-5-5-5h-10v10h10z" fill="#007bff"/>
+                </svg>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#">Features</a>
+                <a href="#">Pricing</a>
+                <a href="learn.html">Learn</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Privacy Policy</h1>
+        <p class="effective-date">Last Updated: March 6, 2025</p>
+        <p>At ProTrade, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our demo trading platform. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.</p>
+
+        <div class="highlight-box">
+            <h3>Important Notice</h3>
+            <p>ProTrade is a demo trading platform. While we collect certain personal information to provide our services, no real money is involved in the transactions on our platform. All trading activities are simulated for educational and demonstration purposes only.</p>
+        </div>
+
+        <div class="table-of-contents">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#information-we-collect">1. Information We Collect</a></li>
+                <li><a href="#how-we-use-information">2. How We Use Your Information</a></li>
+                <li><a href="#disclosure-of-information">3. Disclosure of Your Information</a></li>
+                <li><a href="#security">4. Security of Your Information</a></li>
+                <li><a href="#cookies">5. Cookies and Tracking Technologies</a></li>
+                <li><a href="#third-party-websites">6. Third-Party Websites</a></li>
+                <li><a href="#children">7. Children's Privacy</a></li>
+                <li><a href="#rights">8. Your Privacy Rights</a></li>
+                <li><a href="#updates">9. Updates to This Privacy Policy</a></li>
+                <li><a href="#contact">10. Contact Us</a></li>
+            </ul>
+        </div>
+
+        <h2 id="information-we-collect">1. Information We Collect</h2>
+        <p>We may collect personal information that you voluntarily provide to us when you register on our website, express interest in obtaining information about us or our products and services, or otherwise contact us.</p>
+        
+        <h3>Personal Information</h3>
+        <p>The personal information we collect may include:</p>
+        <ul>
+            <li>Name, email address, contact information, and other identifiers</li>
+            <li>Username and password for account creation</li>
+            <li>Profile preferences and settings</li>
+            <li>Demographic information (such as your country of residence)</li>
+            <li>Communication preferences</li>
+        </ul>
+
+        <h3>Usage Data</h3>
+        <p>We may also collect information about how you access and use our website and services, including:</p>
+        <ul>
+            <li>IP address and browser type</li>
+            <li>Device information (such as your operating system)</li>
+            <li>Pages you visit and features you use</li>
+            <li>Time spent on pages and interaction data</li>
+            <li>Referral sources and exit pages</li>
+            <li>Demo trading activities and performance metrics</li>
+        </ul>
+
+        <h2 id="how-we-use-information">2. How We Use Your Information</h2>
+        <p>We use the information we collect for various purposes, including to:</p>
+        <ul>
+            <li>Create and manage your user account</li>
+            <li>Provide and maintain our demo trading platform</li>
+            <li>Personalize your experience and deliver content relevant to your interests</li>
+            <li>Respond to your inquiries, comments, or concerns</li>
+            <li>Send administrative information, such as updates, security alerts, and support messages</li>
+            <li>Monitor and analyze usage patterns and trends to improve our website and services</li>
+            <li>Develop new features, products, and services</li>
+            <li>Prevent fraudulent transactions and monitor against theft</li>
+            <li>Comply with legal obligations</li>
+        </ul>
+
+        <h2 id="disclosure-of-information">3. Disclosure of Your Information</h2>
+        <p>We may share your information in the following situations:</p>
+        
+        <h3>Business Partners and Third-Party Service Providers</h3>
+        <p>We may share your information with business partners and third-party vendors who perform services for us or on our behalf, such as data analysis, email delivery, hosting services, customer service, and marketing assistance.</p>
+        
+        <h3>Legal Requirements</h3>
+        <p>We may disclose your information where required to do so by law or in response to valid requests by public authorities (e.g., a court or a government agency).</p>
+        
+        <h3>Business Transfers</h3>
+        <p>We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.</p>
+        
+        <h3>With Your Consent</h3>
+        <p>We may disclose your personal information for any other purpose with your consent.</p>
+
+        <h2 id="security">4. Security of Your Information</h2>
+        <p>We use administrative, technical, and physical security measures to protect your personal information from unauthorized access, use, alteration, or disclosure. However, despite our safeguards and efforts, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information.</p>
+
+        <h2 id="cookies">5. Cookies and Tracking Technologies</h2>
+        <p>We use cookies and similar tracking technologies to track activity on our website and store certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device.</p>
+        
+        <p>We use the following types of cookies:</p>
+        <ul>
+            <li><strong>Essential Cookies:</strong> These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in, or filling in forms.</li>
+            <li><strong>Analytics Cookies:</strong> These allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site.</li>
+            <li><strong>Functionality Cookies:</strong> These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages.</li>
+        </ul>
+        
+        <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our website.</p>
+
+        <h2 id="third-party-websites">6. Third-Party Websites</h2>
+        <p>Our website may contain links to other websites that are not operated by us. If you click on a third-party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.</p>
+
+        <h2 id="children">7. Children's Privacy</h2>
+        <p>Our service is not intended for use by individuals under the age of 18 ("Children"). We do not knowingly collect personally identifiable information from children under 18. If you are a parent or guardian and you are aware that your child has provided us with personal data, please contact us. If we become aware that we have collected personal data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
+
+        <h2 id="rights">8. Your Privacy Rights</h2>
+        <p>Depending on your location, you may have certain rights regarding your personal information, which may include:</p>
+        <ul>
+            <li><strong>Access:</strong> You may request copies of your personal information that we hold.</li>
+            <li><strong>Rectification:</strong> You may request that we correct any information you believe is inaccurate or complete information you believe is incomplete.</li>
+            <li><strong>Erasure:</strong> You may request that we erase your personal information, under certain conditions.</li>
+            <li><strong>Restriction:</strong> You may request that we restrict the processing of your personal information, under certain conditions.</li>
+            <li><strong>Object:</strong> You may object to our processing of your personal information, under certain conditions.</li>
+            <li><strong>Data Portability:</strong> You may request that we transfer the data we have collected to another organization, or directly to you, under certain conditions.</li>
+        </ul>
+        
+        <p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us using the information provided in the Contact Us section.</p>
+
+        <h2 id="updates">9. Updates to This Privacy Policy</h2>
+        <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this Privacy Policy. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+
+        <h2 id="contact">10. Contact Us</h2>
+        <div class="contact-section">
+            <h3>Have Questions About Our Privacy Practices?</h3>
+            <p>If you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at:</p>
+            <p><strong>Email:</strong> privacy@protrade.com</p>
+            <p><strong>Postal Address:</strong><br>
+            ProTrade Data Protection Officer<br>
+            123 Financial District<br>
+            Mumbai, Maharashtra 400001<br>
+            India</p>
+            <p><strong>Phone:</strong> +91 22 1234 5678</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" id="backToTop">
+        <svg viewBox="0 0 24 24">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+    </a>
+
+    <footer>
+
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQs</a>
+                <a href="#">Community</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 ProTrade. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Back to Top button functionality
+        const backToTopButton = document.getElementById("backToTop");
+        
+        window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add("visible");
+            } else {
+                backToTopButton.classList.remove("visible");
+            }
+        });
+        
+        backToTopButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Smooth scroll for table of contents links
+        document.querySelectorAll('.table-of-contents a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

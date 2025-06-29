@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Centre - ProTrade</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #2a5885;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #64b5f6;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #64b5f6;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+        
+        .sidebar h3 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+            color: #2a5885;
+        }
+        
+        .help-categories {
+            list-style: none;
+        }
+        
+        .help-categories li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .help-categories li a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .help-categories li a:hover, 
+        .help-categories li a.active {
+            background-color: #e6f0fa;
+            color: #2a5885;
+        }
+        
+        /* Main Help Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .search-container {
+            width: 100%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+        
+        .search-container h2 {
+            color: #2a5885;
+            margin-bottom: 1rem;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .search-box button {
+            background-color: #2a5885;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-box button:hover {
+            background-color: #0056b3;
+        }
+        
+        .faq-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+        
+        .faq-section h2 {
+            color: #2a5885;
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: #2a5885;
+        }
+        
+        .faq-question.active::after {
+            content: '-';
+        }
+        
+        .faq-answer {
+            margin-top: 0.75rem;
+            display: none;
+            padding-left: 0.5rem;
+            color: #555;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* Chatbot Styles */
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            background: white;
+            z-index: 1000;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        #chat-container.collapsed {
+            height: 60px;
+        }
+        
+        #chat-header {
+            background: #2a5885;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #chat-header h3 {
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        #chat-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        #chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .chat-message {
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        
+        .chat-message.user {
+            background-color: #e6f0fa;
+            color: #333;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chat-message.bot {
+            background-color: #f0f0f0;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        #chat-input-area {
+            display: flex;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+        }
+        
+        #chat-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        #chat-send {
+            background-color: #2a5885;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #chat-send:hover {
+            background-color: #1e3f61;
+        }
+        
+        /* Chat launcher button - shows when chat is closed */
+        #chat-launcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #2a5885;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+            font-size: 1.5rem;
+            display: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0056b3;
+            color: white;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            #chat-container {
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">Pro<span>Trade</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="market.html">Markets</a></li>
+                    <li><a href="index.html">Trading</a></li>
+                    <li><a href="learn.html">Learn</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Help Topics</h3>
+            <ul class="help-categories">
+                <li><a href="#" class="active">Account & Registration</a></li>
+                <li><a href="#">Trading Features</a></li>
+                <li><a href="#">Fees & Payments</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="help.html">Technical Support</a></li>
+                <li><a href="#">Mobile Trading</a></li>
+                <li><a href="learn.html">Learning Resources</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="content">
+            <section class="search-container">
+                <h2>How can we help you?</h2>
+                <div class="search-box">
+                    <input type="text" placeholder="Search for help topics...">
+                    <button>Search</button>
+                </div>
+            </section>
+            
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I create an account?</div>
+                    <div class="faq-answer">
+                        To create an account on ProTrade, click the 'Register' button in the top-right corner of our homepage. You'll need to provide your email, create a password, and complete a brief verification process. Once verified, you'll have immediate access to your new account dashboard.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What markets can I trade on?</div>
+                    <div class="faq-answer">
+                        ProTrade offers access to multiple markets including stocks, cryptocurrencies, forex, commodities, and indices. Our platform provides real-time data and advanced trading tools for all supported markets.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What are your trading fees?</div>
+                    <div class="faq-answer">
+                        Our fee structure is transparent and competitive. Stock trades start at $4.99 per trade with volume discounts available. Cryptocurrency trading fees range from 0.1% to 0.5% depending on volume. Forex and CFD spreads start from 0.8 pips. A complete fee schedule is available in the 'Fees' section of our website.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How secure is my data?</div>
+                    <div class="faq-answer">
+                        ProTrade implements bank-level security measures including 256-bit SSL encryption, two-factor authentication, and regular security audits. We never share your personal information with third parties except where required by regulations. Our systems are monitored 24/7 for unauthorized access attempts.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">I forgot my password, what should I do?</div>
+                    <div class="faq-answer">
+                        To reset your password, click the 'Forgot Password' link on the login page. Enter your registered email address, and we'll send you instructions to create a new password. For security reasons, password reset links expire after 1 hour.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you have a mobile app?</div>
+                    <!-- Continuation of the HTML from where it cut off -->
+                    <div class="faq-answer">
+                        Yes, ProTrade offers dedicated mobile apps for iOS and Android devices. Our mobile platform includes all essential trading features of the desktop version, plus biometric authentication and push notifications for price alerts and trade executions.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you offer demo accounts?</div>
+                    <div class="faq-answer">
+                        Yes, we offer free demo accounts with $50,000 in virtual funds. Our demo environment mirrors real market conditions and includes all the features of our live trading platform. It's perfect for practicing strategies without financial risk.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I contact support?</div>
+                    <div class="faq-answer">
+                        Our support team is available 24/7 through multiple channels: Live chat on our website and app, Email at support@protrade.com, Phone at +1-800-PRO-TRADE, or via our support ticket system in your account dashboard.
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>About ProTrade</h3>
+                <ul>
+                    <li><a href="#">Our Company</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press & Media</a></li>
+                    <li><a href="#">Partners</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Trading</h3>
+                <ul>
+                    <li><a href="index.html">Platform Tour</a></li>
+                    <li><a href="ww.html">Demo Account</a></li>
+                    <li><a href="learn.html">Trading Guides</a></li>
+                    <li><a href="news.html">Market News</a></li>
+                </ul>
+            </div>        
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="privacy.html">Terms of Service</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="#">Risk Disclosure</a></li>
+                    <li><a href="privacy.html">AML Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 ProTrade. All rights reserved.
+        </div>
+    </footer>
+    
+    <!-- Chat Launcher Button -->
+    <div id="chat-launcher">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </div>
+    
+    <!-- Chatbot Interface -->
+    <div id="chat-container" class="collapsed">
+        <div id="chat-header">
+            <h3>ProTrade Support</h3>
+            <button id="chat-toggle">-</button>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask a question...">
+            <button id="chat-send">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+    // FAQ Accordion Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function() {
+                // Toggle active class on question
+                this.classList.toggle('active');
+                
+                // Toggle active class on answer
+                const answer = this.nextElementSibling;
+                answer.classList.toggle('active');
+            });
+        });
+        
+        // ProTrade Chatbot Class
+        class ProTradeBot {
+            constructor() {
+                this.knowledgeBase = {
+                    // Account & Registration
+                    "how do i create an account": "To create an account on ProTrade, click the 'Register' button in the top-right corner of our homepage. You'll need to provide your email, create a password, and complete a brief verification process. Once verified, you'll have immediate access to your new account dashboard.",
+                    
+                    "what information do i need to register": "To register on ProTrade, you'll need a valid email address, a secure password, and basic personal information (name, country of residence). Depending on your account type, we may require identity verification documents to comply with financial regulations.",
+                    
+                    "is there a minimum age requirement": "Yes, you must be at least 18 years old to create an account and use ProTrade services.",
+                    
+                    "how do i verify my account": "Account verification is a simple 3-step process: 1) Submit a photo ID (passport, driver's license, or national ID card), 2) Provide proof of address (utility bill or bank statement from the last 3 months), 3) Complete a brief verification call. Most accounts are verified within 24-48 hours.",
+                    
+                    // Trading Features
+                    "what markets can i trade on": "ProTrade offers access to multiple markets including stocks, cryptocurrencies, forex, commodities, and indices. Our platform provides real-time data and advanced trading tools for all supported markets.",
+                    
+                    "what are your trading hours": "Trading hours vary by market. Stock markets follow their respective exchange hours, cryptocurrency trading is available 24/7, and forex trading runs 24/5 (Sunday evening through Friday afternoon). Specific hours for each market can be found in the 'Market Information' section of our platform.",
+                    
+                    "what trading tools do you offer": "ProTrade offers comprehensive trading tools including real-time charts with multiple timeframes, over 100 technical indicators, drawing tools, automated trading strategies, risk management features, portfolio analysis, and customizable alerts.",
+                    
+                    "do you offer demo accounts": "Yes, we offer free demo accounts with $50,000 in virtual funds. Our demo environment mirrors real market conditions and includes all the features of our live trading platform. It's perfect for practicing strategies without financial risk.",
+                    
+                    // Fees & Payments
+                    "what are your trading fees": "Our fee structure is transparent and competitive. Stock trades start at $4.99 per trade with volume discounts available. Cryptocurrency trading fees range from 0.1% to 0.5% depending on volume. Forex and CFD spreads start from 0.8 pips. A complete fee schedule is available in the 'Fees' section of our website.",
+                    
+                    "how do i deposit funds": "ProTrade supports multiple deposit methods including bank transfers, credit/debit cards, and various e-wallets (PayPal, Skrill, Neteller). Cryptocurrency deposits are also accepted. To make a deposit, log into your account, navigate to the 'Funds' section, and select 'Deposit'.",
+                    
+                    "how long do withdrawals take": "Withdrawal processing times vary by method: E-wallets: 1-2 business days, Bank transfers: 2-5 business days, Credit/debit cards: 3-5 business days, Cryptocurrency: Usually within 24 hours. Please note that first-time withdrawals may require additional verification.",
+                    
+                    "what is the minimum deposit": "The minimum deposit varies by account type. Standard accounts require a $200 minimum deposit, while Premium accounts require $5,000. Professional accounts have a $25,000 minimum requirement.",
+                    
+                    // Security
+                    "how secure is my data": "ProTrade implements bank-level security measures including 256-bit SSL encryption, two-factor authentication, and regular security audits. We never share your personal information with third parties except where required by regulations. Our systems are monitored 24/7 for unauthorized access attempts.",
+                    
+                    "is my money safe": "Yes, client funds are held in segregated bank accounts separate from our operational funds. We're regulated by relevant financial authorities and participate in investor compensation schemes that protect client funds up to the statutory limit per account holder.",
+                    
+                    "what happens if protrade goes bankrupt": "In the unlikely event of insolvency, client funds are protected as they're held in segregated accounts that cannot be accessed by creditors. Additionally, our investor compensation scheme provides further protection up to the statutory limit per client.",
+                    
+                    // Technical Support
+                    "how do i contact support": "Our support team is available 24/7 through multiple channels: Live chat on our website and app, Email at support@protrade.com, Phone at +1-800-PRO-TRADE, or via our support ticket system in your account dashboard.",
+                    
+                    "my account is locked": "Account locks typically occur after multiple failed login attempts or suspicious activity detection. To unlock your account, click the 'Account Recovery' link on the login page or contact our support team with your username and registered email address.",
+                    
+                    "i forgot my password": "To reset your password, click the 'Forgot Password' link on the login page. Enter your registered email address, and we'll send you instructions to create a new password. For security reasons, password reset links expire after 1 hour.",
+                    
+                    "the platform is not loading": "If you're experiencing loading issues, try these steps: 1) Clear your browser cache and cookies, 2) Try a different browser or device, 3) Check your internet connection, 4) Disable any VPN services temporarily. If problems persist, contact our technical support team with details about your device and operating system.",
+                    
+                    // Mobile Trading
+                    "do you have a mobile app": "Yes, ProTrade offers dedicated mobile apps for iOS and Android devices. Our mobile platform includes all essential trading features of the desktop version, plus biometric authentication and push notifications for price alerts and trade executions.",
+                    
+                    "how do i install the mobile app": "The ProTrade mobile app is available on the Apple App Store for iOS devices and Google Play Store for Android devices. Search for 'ProTrade Trading Platform' and follow the installation prompts. After installation, log in with your existing ProTrade credentials.",
+                    
+                    // Learning Resources
+                    "do you offer trading education": "Yes, ProTrade provides extensive educational resources including webinars, video tutorials, articles, and an interactive trading academy. Our content covers topics from basic trading concepts to advanced strategies and is suitable for all experience levels.",
+                    
+                    "how do i learn to trade": "We recommend starting with our 'Trading Fundamentals' course in the Education Center. After completing the basics, explore our strategy guides and attend our free weekly webinars. Practice with a demo account before risking real funds. Our support team can also recommend specific resources based on your experience level and interests.",
+                    
+                    // Default responses
+                    "default": "I don't have specific information about that. Could you rephrase your question or visit our comprehensive FAQ section? Alternatively, you can contact our customer support team directly at support@protrade.com or call +1-800-PRO-TRADE for personalized assistance."
+                };
+                
+                // Common greetings
+                this.greetings = [
+                    "hi", "hello", "hey", "good morning", "good afternoon", "good evening"
+                ];
+                
+                // Common goodbyes
+                this.goodbyes = [
+                    "bye", "goodbye", "see you", "thanks", "thank you", "exit", "quit"
+                ];
+            }
+            
+            processInput(userInput) {
+                // Convert to lowercase and trim whitespace
+                const input = userInput.toLowerCase().trim();
+                
+                // Check for greetings
+                if (this.greetings.some(greeting => input.includes(greeting))) {
+                    return "Hello! Welcome to ProTrade support. How can I help you with your trading needs today?";
+                }
+                
+                // Check for goodbyes
+                if (this.goodbyes.some(goodbye => input.includes(goodbye))) {
+                    return "Thank you for chatting with ProTrade support. If you have more questions later, feel free to return. Happy trading!";
+                }
+                
+                // Look for matching questions in knowledge base
+                const matchingQuestions = Object.keys(this.knowledgeBase).filter(question => 
+                    input.includes(question) || 
+                    this.calculateSimilarity(input, question) > 0.7
+                );
+                
+                if (matchingQuestions.length > 0) {
+                    // Sort by similarity if there are multiple matches
+                    matchingQuestions.sort((a, b) => 
+                        this.calculateSimilarity(input, b) - this.calculateSimilarity(input, a)
+                    );
+                    
+                    return this.knowledgeBase[matchingQuestions[0]];
+                }
+                
+                // If no direct match, check for keywords
+                for (const question in this.knowledgeBase) {
+                    const keywords = question.split(" ");
+                    for (const word of keywords) {
+                        if (word.length > 3 && input.includes(word)) {
+                            return this.knowledgeBase[question];
+                        }
+                    }
+                }
+                
+                // Return default response if no match found
+                return this.knowledgeBase["default"];
+            }
+            
+            calculateSimilarity(str1, str2) {
+                // A simple word matching similarity algorithm
+                const words1 = str1.split(" ");
+                const words2 = str2.split(" ");
+                
+                let matches = 0;
+                for (const word of words1) {
+                    if (word.length > 3 && words2.includes(word)) {
+                        matches++;
+                    }
+                }
+                
+                return matches / Math.max(words1.length, words2.length);
+            }
+        }
+        
+        // Initialize chatbot
+        const protradeBot = new ProTradeBot();
+        
+        // Chat interface elements
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatContainer = document.getElementById('chat-container');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatLauncher = document.getElementById('chat-launcher');
+        
+        // Toggle chat visibility
+        chatToggle.addEventListener('click', function() {
+            chatContainer.classList.toggle('collapsed');
+            
+            // Update toggle button text
+            this.textContent = chatContainer.classList.contains('collapsed') ? '+' : '-';
+            
+            // Show/hide chat launcher
+            chatLauncher.style.display = chatContainer.classList.contains('collapsed') ? 'flex' : 'none';
+        });
+        
+        // Open chat when launcher is clicked
+        chatLauncher.addEventListener('click', function() {
+            chatContainer.classList.remove('collapsed');
+            chatToggle.textContent = '-';
+            chatLauncher.style.display = 'none';
+        });
+        
+        // Send message functionality
+        function sendMessage() {
+            const messageText = chatInput.value.trim();
+            if (messageText === '') return;
+            
+            // Add user message to chat
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('chat-message', 'user');
+            userMessage.textContent = messageText;
+            chatMessages.appendChild(userMessage);
+            
+            // Get bot response
+            const botResponseText = protradeBot.processInput(messageText);
+            const botMessage = document.createElement('div');
+            botMessage.classList.add('chat-message', 'bot');
+            botMessage.textContent = botResponseText;
+            chatMessages.appendChild(botMessage);
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Scroll to bottom of chat
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Handle send button click
+        chatSend.addEventListener('click', sendMessage);
+        
+        // Handle enter key press
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Add welcome message when chat opens for the first time
+        chatLauncher.addEventListener('click', function() {
+            if (chatMessages.children.length === 0) {
+                const welcomeMessage = document.createElement('div');
+                welcomeMessage.classList.add('chat-message', 'bot');
+                welcomeMessage.textContent = "Hello! Welcome to ProTrade support. How can I assist you today?";
+                chatMessages.appendChild(welcomeMessage);
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Portal</title>
+    <link rel="stylesheet" href="news.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <header class="animate__animated animate__fadeInDown">
+        <h1>News Portal</h1>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search news...">
+            <button onclick="fetchNews()" class="animate__animated animate__pulse animate__infinite">Search</button>
+        </div>
+    </header>
+    <main id="news-container" class="animate__animated animate__fadeIn"></main>
+    <script src="news.js"></script>
+</body>
+</html>

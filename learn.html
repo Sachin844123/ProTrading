@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ProTrade Learning Center - Master the art of trading">
+    <meta name="keywords" content="trading education, stock market learning, trading courses">
+    <title>ProTrade - Learning Center</title>
+    
+    <!-- Same header imports as main page -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="learn.css">
+
+</head>
+<body>
+    <!-- Header Section (same as main page) -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <h2><i class="fas fa-chart-line"></i> ProTrade</h2>
+                    </a>
+                </div>
+                
+                <div class="nav-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="market.html"><i class="fas fa-chart-bar"></i> Market</a></li>
+                    <li><a href="ww.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+                    <li><a href="watchlist.html"><i class="far fa-star"></i> Watchlist</a></li>
+                    <li><a href="news.html"><i class="far fa-newspaper"></i> News</a></li>
+                    <li><a href="learn.html" class="active"><i class="fas fa-graduation-cap"></i> Learn</a></li>
+                </ul>
+                
+                <div class="nav-buttons">
+                    <a href="signin.html" class="btn btn-outline">Sign In</a>
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Learning Hero Section -->
+    <section class="learning-hero">
+        <div class="container">
+            <div class="learning-hero-content">
+                <h1>Master the Art of Trading</h1>
+                <p>From basics to advanced strategies, learn everything you need to know about stock trading from industry experts</p>
+                <div class="learning-stats">
+                    <div class="stat">
+                        <h3>50+</h3>
+                        <p>Expert Courses</p>
+                    </div>
+                    <div class="stat">
+                        <h3>100+</h3>
+                        <p>Video Tutorials</p>
+                    </div>
+                    <div class="stat">
+                        <h3>20K+</h3>
+                        <p>Active Learners</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Floating Elements -->
+        <i class="fas fa-chart-line hero-floating-element"></i>
+        <i class="fas fa-graduation-cap hero-floating-element"></i>
+        <i class="fas fa-book hero-floating-element"></i>
+    </section>
+
+    <!-- Update the chart section -->
+    <section class="chart-overview">
+        <div class="container">
+            <div class="section-header">
+                <h2>Live Market Overview</h2>
+                <p>Practice with real-time market data</p>
+            </div>
+            
+            <div class="chart-container">
+                <!-- Add button to show chart -->
+                <div class="chart-button-container">
+                    <button id="showChartBtn" class="btn btn-primary">
+                        <i class="fas fa-chart-line"></i> Show Live Chart
+                    </button>
+                </div>
+
+                <div id="chartWrapper" class="chart-wrapper" style="display: none;">
+                    <!-- Add close button -->
+                    <button id="closeChartBtn" class="close-chart-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container">
+                        <div id="tradingview_chart"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                        <script type="text/javascript">
+                        function initChart() {
+                            new TradingView.widget({
+                                "width": "100%",
+                                "height": 500,
+                                "symbol": "NASDAQ:AAPL",
+                                "interval": "D",
+                                "timezone": "Asia/Kolkata",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "en",
+                                "toolbar_bg": "#f1f3f6",
+                                "enable_publishing": false,
+                                "allow_symbol_change": true,
+                                "container_id": "tradingview_chart",
+                                "studies": [
+                                    "MASimple@tv-basicstudies",
+                                    "RSI@tv-basicstudies"
+                                ],
+                                "show_popup_button": true,
+                                "popup_width": "1000",
+                                "popup_height": "650",
+                                "watchlist": [
+                                    // US Tech Giants
+                                    "NASDAQ:AAPL",
+                                    "NASDAQ:MSFT",
+                                    "NASDAQ:GOOGL",
+                                    "NASDAQ:AMZN",
+                                    "NASDAQ:META",
+                                    "NASDAQ:NVDA",
+                                    "NYSE:TSLA",
+                                    // US Financial
+                                    "NYSE:JPM",
+                                    "NYSE:BAC",
+                                    "NYSE:GS",
+                                    // US Healthcare
+                                    "NYSE:JNJ",
+                                    "NYSE:PFE",
+                                    // US Retail
+                                    "NYSE:WMT",
+                                    "NYSE:HD",
+                                    // Indian Stocks
+                                    "NSE:NIFTY",
+                                    "BSE:SENSEX",
+                                    "NSE:RELIANCE",
+                                    "NSE:TCS"
+                                ]
+                            });
+                        }
+                        </script>
+                    </div>
+                    <!-- TradingView Widget END -->
+
+                    <!-- Update quick symbols with more US stocks -->
+                    <div class="quick-symbols">
+                        <!-- US Tech -->
+                        <button class="symbol-btn active" data-symbol="NASDAQ:AAPL">APPLE</button>
+                        <button class="symbol-btn" data-symbol="NASDAQ:MSFT">MICROSOFT</button>
+                        <button class="symbol-btn" data-symbol="NASDAQ:GOOGL">GOOGLE</button>
+                        <button class="symbol-btn" data-symbol="NASDAQ:AMZN">AMAZON</button>
+                        <button class="symbol-btn" data-symbol="NASDAQ:META">META</button>
+                        <button class="symbol-btn" data-symbol="NASDAQ:NVDA">NVIDIA</button>
+                        <button class="symbol-btn" data-symbol="NYSE:TSLA">TESLA</button>
+                        
+                        <!-- US Market Indices -->
+                        <button class="symbol-btn" data-symbol="FOREXCOM:SPXUSD">S&P 500</button>
+                        <button class="symbol-btn" data-symbol="NASDAQ:NDX">NASDAQ 100</button>
+                        <button class="symbol-btn" data-symbol="DJ:DJI">DOW JONES</button>
+                        
+                        <!-- Indian Market -->
+                        <button class="symbol-btn" data-symbol="NSE:NIFTY">NIFTY 50</button>
+                        <button class="symbol-btn" data-symbol="BSE:SENSEX">SENSEX</button>
+                        <button class="symbol-btn" data-symbol="NSE:BANKNIFTY">BANK NIFTY</button>
+                    </div>
+                </div>
+                
+                <div class="chart-features">
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Technical Analysis</h3>
+                        <p>Learn to read and analyze price charts</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-tools"></i>
+                        <h3>Trading Tools</h3>
+                        <p>Master essential trading indicators</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Real-time Data</h3>
+                        <p>Practice with live market feeds</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Categories -->
+    <section class="course-categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Learning Paths</h2>
+                <p>Choose your journey from beginner to advanced trading</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Beginner Basics</h3>
+                    <ul>
+                        <li>Introduction to Stock Market</li>
+                        <li>Understanding Market Terms</li>
+                        <li>Basic Technical Analysis</li>
+                        <li>Fundamental Analysis</li>
+                    </ul>
+                    <a href="beginner-course.html" class="btn btn-outline">Start Learning</a>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Intermediate Trading</h3>
+                    <ul>
+                        <li>Advanced Chart Patterns</li>
+                        <li>Trading Strategies</li>
+                        <li>Risk Management</li>
+                        <li>Portfolio Management</li>
+                    </ul>
+                    <a href="intermediate-course.html" class="btn btn-outline">Start Learning</a>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Advanced Analysis</h3>
+                    <ul>
+                        <li>Complex Trading Patterns</li>
+                        <li>Options Trading</li>
+                        <li>Market Psychology</li>
+                        <li>Algorithmic Trading</li>
+                    </ul>
+                    <a href="advanced-course.html" class="btn btn-outline">Start Learning</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add this section after your existing course categories -->
+    <section class="video-courses">
+        <div class="container">
+            <div class="section-header">
+                <h2>Video Tutorials</h2>
+                <p>Learn from our curated collection of trading tutorials</p>
+            </div>
+
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe 
+                            src="https://www.youtube.com/embed/Xn7KWR9EOGQ" 
+                            title="Basics of Stock Market" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3>Stock Market Basics</h3>
+                        <p>Learn the fundamentals of stock market trading</p>
+                        <span class="video-duration"><i class="far fa-clock"></i> 15:30</span>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe 
+                            src="https://www.youtube.com/embed/ZCFkWDdmXG8" 
+                            title="Technical Analysis" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3>Technical Analysis</h3>
+                        <p>Master chart patterns and indicators</p>
+                        <span class="video-duration"><i class="far fa-clock"></i> 20:45</span>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe 
+                            src="https://www.youtube.com/embed/7PWkN9viNxA" 
+                            title="Trading Psychology" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3>Trading Psychology</h3>
+                        <p>Understanding market psychology and emotions</p>
+                        <span class="video-duration"><i class="far fa-clock"></i> 18:20</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-more-container">
+                <a href="https://www.youtube.com/playlist?list=YOUR_PLAYLIST_ID" class="btn btn-primary" target="_blank">
+                    View More Tutorials <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Courses -->
+    <section class="featured-courses">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Courses</h2>
+                <p>Most sought-after courses by our community</p>
+            </div>
+
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop&q=80" 
+                             alt="Trading Basics"
+                             loading="lazy">
+                        <span class="course-level">Beginner</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Trading Basics 101</h3>
+                        <p>Learn the fundamentals of stock market trading</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 2 hours</span>
+                            <span><i class="fas fa-video"></i> 15 lessons</span>
+                        </div>
+                        <a href="trading-basics.html" class="btn btn-primary">Start Course</a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&auto=format&fit=crop&q=80"
+                             alt="Technical Analysis"
+                             loading="lazy">
+                        <span class="course-level">Intermediate</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Technical Analysis Mastery</h3>
+                        <p>Master chart patterns and technical indicators</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 4 hours</span>
+                            <span><i class="fas fa-video"></i> 25 lessons</span>
+                        </div>
+                        <a href="technical-analysis.html" class="btn btn-primary">Start Course</a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop&q=80"
+                             alt="Risk Management"
+                             loading="lazy">
+                        <span class="course-level">Advanced</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Risk Management Strategies</h3>
+                        <p>Learn to protect your investments</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span><i class="fas fa-video"></i> 20 lessons</span>
+                        </div>
+                        <a href="risk-management.html" class="btn btn-primary">Start Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Resources -->
+    <section class="learning-resources">
+        <div class="container">
+            <div class="section-header">
+                <h2>Additional Resources</h2>
+                <p>Enhance your learning with our comprehensive resources</p>
+            </div>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <i class="fas fa-book"></i>
+                    <h3>E-Books</h3>
+                    <p>Download comprehensive guides and e-books</p>
+                    <a href="ebooks.html" class="btn btn-outline">Browse Library</a>
+                </div>
+
+                <div class="resource-card">
+                    <i class="fas fa-video"></i>
+                    <h3>Webinars</h3>
+                    <p>Join live sessions with market experts</p>
+                    <a href="webinars.html" class="btn btn-outline">View Schedule</a>
+                </div>
+
+                <div class="resource-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Community</h3>
+                    <p>Connect with fellow traders</p>
+                    <a href="community.html" class="btn btn-outline">Join Discussion</a>
+                </div>
+
+                <div class="resource-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Practice Arena</h3>
+                    <p>Test your strategies in simulation</p>
+                    <a href="practice.html" class="btn btn-outline">Start Practice</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Update the testimonials section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trader Reviews</h2>
+                <p>What our community says about ProTrade</p>
+            </div>
+
+            <!-- Existing testimonials -->
+            <div class="testimonials-grid">
+                <!-- ... existing testimonial cards ... -->
+            </div>
+
+            <!-- Update the review form section -->
+            <div class="review-section">
+                <!-- Add toggle button -->
+                <button id="toggleReviewForm" class="btn btn-primary toggle-review-btn">
+                    <span class="open-text"><i class="fas fa-plus"></i> Write a Review</span>
+                    <span class="close-text"><i class="fas fa-times"></i> Close Form</span>
+                </button>
+
+                <!-- Review Form Container -->
+                <div id="reviewFormContainer" class="review-form-container hidden">
+                    <h3>Share Your Experience</h3>
+                    <form id="reviewForm" class="review-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rating">Rating</label>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5">
+                                <label for="star5"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="review">Your Review</label>
+                            <textarea id="review" name="review" rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience">Trading Experience</label>
+                            <select id="experience" name="experience" required>
+                                <option value="">Select your experience level</option>
+                                <option value="beginner">Beginner (0-1 year)</option>
+                                <option value="intermediate">Intermediate (1-3 years)</option>
+                                <option value="advanced">Advanced (3-5 years)</option>
+                                <option value="expert">Expert (5+ years)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as main page) -->
+    <footer>
+        <!-- Copy the footer section from index.html -->
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // Copy the relevant JavaScript from index.html
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            mobileMenu.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // Back to Top Button
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            const showChartBtn = document.getElementById('showChartBtn');
+            const closeChartBtn = document.getElementById('closeChartBtn');
+            const chartWrapper = document.getElementById('chartWrapper');
+            let chartInitialized = false;
+
+            showChartBtn.addEventListener('click', function() {
+                chartWrapper.style.display = 'block';
+                chartWrapper.classList.add('active');
+                
+                // Initialize chart if not already done
+                if (!chartInitialized) {
+                    initChart();
+                    chartInitialized = true;
+                }
+                
+                // Change button text
+                showChartBtn.innerHTML = '<i class="fas fa-check"></i> Chart Loaded';
+                showChartBtn.classList.add('hidden');
+                
+                // Scroll to chart
+                chartWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+
+            closeChartBtn.addEventListener('click', function() {
+                chartWrapper.classList.remove('active');
+                setTimeout(() => {
+                    chartWrapper.style.display = 'none';
+                    // Reset and show the original button
+                    showChartBtn.innerHTML = '<i class="fas fa-chart-line"></i> Show Live Chart';
+                    showChartBtn.classList.remove('hidden');
+                    showChartBtn.disabled = false;
+                    showChartBtn.style.backgroundColor = '';
+                }, 500); // Match the transition duration
+
+                // Scroll back to the button
+                showChartBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+
+            // Add symbol switching functionality
+            const symbolButtons = document.querySelectorAll('.symbol-btn');
+            
+            symbolButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const symbol = this.dataset.symbol;
+                    
+                    // Update active state
+                    symbolButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update chart
+                    if (window.tvWidget) {
+                        window.tvWidget.setSymbol(symbol, 'D');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Update the JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('toggleReviewForm');
+        const formContainer = document.getElementById('reviewFormContainer');
+        const reviewForm = document.getElementById('reviewForm');
+        
+        // Toggle form visibility
+        toggleBtn.addEventListener('click', function() {
+            formContainer.classList.toggle('hidden');
+            toggleBtn.classList.toggle('active');
+            
+            // Smooth scroll to form when opening
+            if (!formContainer.classList.contains('hidden')) {
+                formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+        
+        // Existing form submission handler
+        reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(reviewForm);
+            
+            // Create success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.textContent = 'Thank you for your review! It will be published after moderation.';
+            
+            // Replace form with success message
+            formContainer.innerHTML = '';
+            formContainer.appendChild(successMessage);
+            
+            // Show message with animation
+            setTimeout(() => {
+                successMessage.classList.add('show');
+            }, 100);
+            
+            // Reset and hide form after delay
+            setTimeout(() => {
+                reviewForm.reset();
+                formContainer.classList.add('hidden');
+                toggleBtn.classList.remove('active');
+                
+                // Restore form after hiding
+                setTimeout(() => {
+                    formContainer.innerHTML = '';
+                    formContainer.appendChild(reviewForm);
+                }, 500);
+            }, 3000);
+        });
+    });
+    </script>
+</body>
+</html> 

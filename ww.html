@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio - ProTrade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #6c757d;
+            --success-color: #4CAF50;
+            --danger-color: #f44336;
+            --light-color: #f8f9fa;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0,0,0,0.1);
+            --shadow-hover: rgba(0,0,0,0.15);
+            --success-bg: rgba(76,175,80,0.1);
+            --danger-bg: rgba(244,67,54,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+        }
+
+        .navbar {
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-menu a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-menu a:hover:not(.active) {
+            background-color: var(--light-color);
+        }
+
+        .portfolio-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px var(--shadow-hover);
+        }
+
+        .summary-card h3 {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stock-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stock-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .stock-price-change {
+            font-size: 0.9rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .success {
+            color: var(--success-color);
+            background-color: var(--success-bg);
+        }
+
+        .danger {
+            color: var(--danger-color);
+            background-color: var(--danger-bg);
+        }
+
+        .stock-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stock-detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 500;
+        }
+
+        .stock-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .trade-history {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .trade-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .trade-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trade-item:last-child {
+            border-bottom: none;
+        }
+
+        .trade-details {
+            flex: 1;
+        }
+
+        .trade-timestamp {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-container {
+                padding: 1rem;
+            }
+
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stock-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="nav-logo">
+                <h2>ProTrade</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="market.html">Market</a>
+                <a href="portfolio.html" class="active">Portfolio</a>
+                <a href="watchlist.html">Watchlist</a>
+                <a href="news.html">News</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="portfolio-container">
+        <div class="section-header">
+            <h2>Portfolio Summary</h2>
+            <p class="wallet-balance">Wallet Balance: <span id="walletBalance">0.00</span></p>
+        </div>
+
+        <div class="summary-cards">
+            <div class="summary-card">
+                <h3>Total Investment</h3>
+                <p id="totalInvestment">₹0.00</p>
+            </div>
+            <div class="summary-card">
+                <h3>Current Value</h3>
+                <p id="currentValue">₹0.00</p>
+            </div>
+            <div class="summary-card">
+                <h3>Total Returns</h3>
+                <p id="totalReturns">₹0.00</p>
+            </div>
+            <div class="summary-card">
+                <h3>Return Rate</h3>
+                <p id="returnRate">0.00%</p>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Your Holdings</h2>
+            <button class="btn btn-primary" onclick="toggleView()">
+                <i class="fas fa-chart-line"></i> Toggle View
+            </button>
+        </div>
+
+        <div id="portfolioContainer" class="portfolio-grid"></div>
+
+        <div class="section-header">
+            <h2>Recent Trades</h2>
+            <button class="btn btn-danger" onclick="clearTradeHistory()">
+                <i class="fas fa-trash"></i> Clear History
+            </button>
+        </div>
+
+        <div class="trade-history">
+            <ul id="tradeHistory" class="trade-list"></ul>
+        </div>
+    </div>
+
+    <div id="sellModal" class="modal">
+        <div class="modal-content">
+            <h3>Sell Stock</h3>
+            <div id="sellForm"></div>
+        </div>
+    </div>
+
+    <script>
+    // Initialize local storage if needed
+    if (!localStorage.getItem("wallet")) {
+        localStorage.setItem("wallet", JSON.stringify(100000));
+    }
+    if (!localStorage.getItem("portfolio")) {
+        localStorage.setItem("portfolio", JSON.stringify([]));
+    }
+    if (!localStorage.getItem("tradeHistory")) {
+        localStorage.setItem("tradeHistory", JSON.stringify([]));
+    }
+    // NEW: Add storage for market data
+    if (!localStorage.getItem("marketStocks")) {
+        const initialMarketStocks = getInitialMarketStocks();
+        localStorage.setItem("marketStocks", JSON.stringify(initialMarketStocks));
+    }
+
+    // State management
+    let state = {
+        wallet: JSON.parse(localStorage.getItem("wallet")),
+        portfolio: JSON.parse(localStorage.getItem("portfolio")),
+        tradeHistory: JSON.parse(localStorage.getItem("tradeHistory")),
+        viewMode: localStorage.getItem("viewMode") || "grid"
+    };
+
+    // FIXED: Get market stocks from local storage
+    let marketStocks = JSON.parse(localStorage.getItem("marketStocks")) || getInitialMarketStocks();
+
+    // Market data with volatility factors
+    function getInitialMarketStocks() {
+        return [
+            { name: "TCS", price: 3500, volatility: 0.8, initialPrice: 3500, change: 0 },
+            { name: "Reliance", price: 2700, volatility: 1.2, initialPrice: 2700, change: 0 },
+            { name: "Infosys", price: 1600, volatility: 0.9, initialPrice: 1600, change: 0 },
+            { name: "HDFC Bank", price: 1500, volatility: 0.7, initialPrice: 1500, change: 0 },
+            { name: "ICICI Bank", price: 930, volatility: 1.1, initialPrice: 930, change: 0 },
+            { name: "Tata Motors", price: 670, volatility: 1.5, initialPrice: 670, change: 0 },
+            { name: "SBI", price: 600, volatility: 1.3, initialPrice: 600, change: 0 },
+            { name: "HUL", price: 2500, volatility: 0.6, initialPrice: 2500, change: 0 },
+            { name: "Bajaj Finance", price: 7200, volatility: 1.4, initialPrice: 7200, change: 0 },
+            { name: "Adani Green", price: 1300, volatility: 2.0, initialPrice: 1300, change: 0 },
+            { name: "ITC", price: 400, volatility: 0.5, initialPrice: 400, change: 0 },
+            { name: "L&T", price: 2100, volatility: 1.0, initialPrice: 2100, change: 0 },
+            { name: "Wipro", price: 450, volatility: 0.9, initialPrice: 450, change: 0 },
+            { name: "Kotak Bank", price: 1800, volatility: 0.8, initialPrice: 1800, change: 0 },
+            { name: "Asian Paints", price: 3100, volatility: 0.7, initialPrice: 3100, change: 0 },
+            { name: "Bharti Airtel", price: 1150, volatility: 1.1, initialPrice: 1150, change: 0 },
+            { name: "Sun Pharma", price: 1400, volatility: 0.8, initialPrice: 1400, change: 0 },
+            { name: "NTPC", price: 280, volatility: 0.5, initialPrice: 280, change: 0 },
+            { name: "Power Grid", price: 240, volatility: 0.4, initialPrice: 240, change: 0 },
+            { name: "Tech Mahindra", price: 1250, volatility: 1.2, initialPrice: 1250, change: 0 },
+            { name: "Hero MotoCorp", price: 3100, volatility: 1.3, initialPrice: 3100, change: 0 },
+            { name: "Titan", price: 3400, volatility: 1.1, initialPrice: 3400, change: 0 },
+            { name: "Nestle India", price: 24500, volatility: 0.6, initialPrice: 24500, change: 0 },
+            { name: "Coal India", price: 320, volatility: 0.9, initialPrice: 320, change: 0 },
+            { name: "UltraTech Cement", price: 8900, volatility: 1.0, initialPrice: 8900, change: 0 },
+            { name: "Dr Reddy's", price: 5600, volatility: 0.8, initialPrice: 5600, change: 0 },
+            { name: "Adani Ports", price: 850, volatility: 1.8, initialPrice: 850, change: 0 },
+            { name: "Grasim", price: 2100, volatility: 1.2, initialPrice: 2100, change: 0 },
+            { name: "JSW Steel", price: 840, volatility: 1.4, initialPrice: 840, change: 0 },
+            { name: "Tata Steel", price: 130, volatility: 1.5, initialPrice: 130, change: 0 },
+            { name: "M&M", price: 1650, volatility: 1.2, initialPrice: 1650, change: 0 },
+            { name: "Bajaj Auto", price: 7200, volatility: 1.1, initialPrice: 7200, change: 0 },
+            { name: "Cipla", price: 1180, volatility: 0.7, initialPrice: 1180, change: 0 },
+            { name: "BPCL", price: 460, volatility: 1.3, initialPrice: 460, change: 0 },
+            { name: "IndusInd Bank", price: 1480, volatility: 1.4, initialPrice: 1480, change: 0 },
+            { name: "Britannia", price: 4600, volatility: 0.6, initialPrice: 4600, change: 0 },
+            { name: "ONGC", price: 210, volatility: 1.2, initialPrice: 210, change: 0 },
+            { name: "Eicher Motors", price: 3850, volatility: 1.3, initialPrice: 3850, change: 0 },
+            { name: "Tata Consumer", price: 960, volatility: 0.8, initialPrice: 960, change: 0 },
+            { name: "Hindalco", price: 520, volatility: 1.6, initialPrice: 520, change: 0 }
+        ];
+    }
+
+    // Utility functions
+    const formatCurrency = (amount) => {
+        // Ensure amount is a valid number
+        if (isNaN(amount)) amount = 0;
+        
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            maximumFractionDigits: 2
+        }).format(amount);
+    };
+
+    const formatPercentage = (value) => {
+        // Ensure value is a valid number
+        if (isNaN(value)) value = 0;
+        
+        return new Intl.NumberFormat('en-IN', {
+            style: 'percent',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value / 100);
+    };
+
+    // Update stock prices with realistic market simulation
+    function updateLiveStockPrices() {
+        // Try to get market data from React component (market.html)
+        const marketData = localStorage.getItem("marketData");
+        
+        if (marketData) {
+            try {
+                const parsedData = JSON.parse(marketData);
+                // Check if the data is fresh (less than 2 seconds old)
+                if (parsedData.lastUpdate && (Date.now() - parsedData.lastUpdate) < 2000) {
+                    marketStocks = parsedData.stocks;
+                    updatePortfolioView();
+                    return;
+                }
+            } catch (error) {
+                console.error("Error parsing market data:", error);
+            }
+        }
+        
+        // Fallback to local price updates if market data is not available or too old
+        let hasChanges = false;
+        
+        marketStocks.forEach(stock => {
+            // Ensure initialPrice is always defined
+            if (!stock.initialPrice || stock.initialPrice === 0) {
+                stock.initialPrice = stock.price;
+            }
+            
+            // Add time-based factor (market hours simulation)
+            const hour = new Date().getHours();
+            const isMarketHours = hour >= 9 && hour < 16;
+            const timeVolatility = isMarketHours ? 1 : 0.3;
+    
+            // Calculate price change with multiple factors
+            const baseChange = (Math.random() * 2 - 1);
+            const volatilityFactor = stock.volatility * timeVolatility;
+            const change = baseChange * volatilityFactor;
+    
+            // Update price with limits
+            const newPrice = stock.price * (1 + change / 100);
+            const maxChange = stock.initialPrice * 0.2; // 20% max change from initial
+            
+            const oldPrice = stock.price;
+            stock.price = Math.max(
+                stock.initialPrice - maxChange,
+                Math.min(stock.initialPrice + maxChange, newPrice)
+            );
+            
+            // Calculate change safely
+            stock.change = ((stock.price - stock.initialPrice) / stock.initialPrice) * 100;
+            
+            if (oldPrice !== stock.price) {
+                hasChanges = true;
+            }
+        });
+        
+        // Save market data to localStorage when changes occur
+        if (hasChanges) {
+            localStorage.setItem("marketStocks", JSON.stringify(marketStocks));
+            localStorage.setItem("marketData", JSON.stringify({
+                stocks: marketStocks,
+                lastUpdate: Date.now()
+            }));
+        }
+    
+        updatePortfolioView();
+    }
+
+    // Portfolio management functions
+    function updatePortfolioView() {
+        const portfolioContainer = document.getElementById("portfolioContainer");
+        if (!portfolioContainer) return;
+        
+        // Set class based on current view mode
+        portfolioContainer.className = state.viewMode === "grid" ? "portfolio-grid" : "portfolio-list";
+        
+        portfolioContainer.innerHTML = "";
+
+        // FIXED: Initialize summary values
+        let totalInvestment = 0;
+        let currentValue = 0;
+
+        // Process each stock in portfolio
+        state.portfolio.forEach((stock, index) => {
+            try {
+                const marketStock = marketStocks.find(s => s.name === stock.name);
+                if (!marketStock) throw new Error(`Stock ${stock.name} not found in market data`);
+
+                const currentPrice = marketStock.price;
+                const value = currentPrice * stock.quantity;
+                const investment = stock.buyPrice * stock.quantity;
+                const profitLoss = value - investment;
+                
+                // Avoid division by zero
+                const profitLossPercentage = investment > 0 ? (profitLoss / investment) * 100 : 0;
+
+                // FIXED: Add to summary totals
+                totalInvestment += investment;
+                currentValue += value;
+
+                const stockCard = createStockCard({
+                    stock,
+                    marketStock,
+                    currentPrice,
+                    value,
+                    investment,
+                    profitLoss,
+                    profitLossPercentage,
+                    index
+                });
+
+                portfolioContainer.appendChild(stockCard);
+            } catch (error) {
+                console.error(`Error processing stock ${stock.name}:`, error);
+            }
+        });
+
+        // FIXED: Always call updateSummaryCards even if portfolio is empty
+        updateSummaryCards(totalInvestment, currentValue);
+    }
+
+    function createStockCard(data) {
+        const { stock, marketStock, currentPrice, value, investment, profitLoss, profitLossPercentage, index } = data;
+        
+        const card = document.createElement("div");
+        card.className = "stock-card";
+        
+        // Add safety checks for marketStock.change
+        const changeValue = marketStock.change || 0;
+        
+        card.innerHTML = `
+            <div class="stock-header">
+                <span class="stock-name">${stock.name}</span>
+                <span class="stock-price-change ${changeValue >= 0 ? 'success' : 'danger'}">
+                    ${changeValue >= 0 ? '↑' : '↓'} ${Math.abs(changeValue).toFixed(0.5)}%
+                </span>
+            </div>
+            <div class="stock-details">
+                <div class="stock-detail-item">
+                    <span class="detail-label">Quantity</span>
+                    <span class="detail-value">${stock.quantity}</span>
+                </div>
+                <div class="stock-detail-item">
+                    <span class="detail-label">Avg. Buy Price</span>
+                    <span class="detail-value">${formatCurrency(stock.buyPrice)}</span>
+                </div>
+                <div class="stock-detail-item">
+                    <span class="detail-label">Current Price</span>
+                    <span class="detail-value">${formatCurrency(currentPrice)}</span>
+                </div>
+                <div class="stock-detail-item">
+                    <span class="detail-label">P/L</span>
+                    <span class="detail-value ${profitLoss >= 0 ? 'success' : 'danger'}">
+                        ${formatCurrency(profitLoss)} (${formatPercentage(profitLossPercentage)})
+                    </span>
+                </div>
+            </div>
+            <div class="stock-actions">
+                <button class="btn btn-primary" onclick="showSellModal(${index})">
+                    Sell
+                </button>
+                <button class="btn btn-secondary" onclick="showStockDetails(${index})">
+                    Details
+                </button>
+            </div>
+        `;
+        
+        return card;
+    }
+
+    function updateSummaryCards(totalInvestment, currentValue) {
+        // FIXED: Calculate values here rather than relying on passed arguments
+        let calculatedTotalInvestment = 0;
+        let calculatedCurrentValue = 0;
+        
+        // Recalculate values to ensure accuracy
+        state.portfolio.forEach(stock => {
+            const marketStock = marketStocks.find(s => s.name === stock.name);
+            if (marketStock) {
+                calculatedTotalInvestment += stock.buyPrice * stock.quantity;
+                calculatedCurrentValue += marketStock.price * stock.quantity;
+            }
+        });
+        
+        // Use calculated values instead of parameters
+        const totalReturns = calculatedCurrentValue - calculatedTotalInvestment;
+        
+        // Avoid division by zero
+        const returnRate = calculatedTotalInvestment > 0 ? (totalReturns / calculatedTotalInvestment) * 100 : 0;
+
+        // Update DOM elements
+        document.getElementById("walletBalance").textContent = formatCurrency(state.wallet);
+        document.getElementById("totalInvestment").textContent = formatCurrency(calculatedTotalInvestment);
+        document.getElementById("currentValue").textContent = formatCurrency(calculatedCurrentValue);
+        document.getElementById("totalReturns").textContent = formatCurrency(totalReturns);
+        document.getElementById("returnRate").textContent = formatPercentage(returnRate);
+    }
+
+    // Trade execution functions
+    function showSellModal(index) {
+        const stock = state.portfolio[index];
+        const marketStock = marketStocks.find(s => s.name === stock.name);
+        
+        const modal = document.getElementById("sellModal");
+        const form = document.getElementById("sellForm");
+        
+        form.innerHTML = `
+            <p>Current Price: ${formatCurrency(marketStock.price)}</p>
+            <p>Quantity Available: ${stock.quantity}</p>
+            <div style="margin: 1rem 0;">
+                <label for="sellQuantity">Quantity to Sell:</label>
+                <input type="number" id="sellQuantity" min="1" max="${stock.quantity}" value="${stock.quantity}" style="width: 100%; padding: 0.5rem; margin-top: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button onclick="executeSale(${index})" class="btn btn-primary" style="flex: 1;">Confirm Sale</button>
+                <button onclick="closeSellModal()" class="btn btn-secondary" style="flex: 1;">Cancel</button>
+            </div>
+        `;
+        
+        modal.style.display = "block";
+    }
+
+    function executeSale(index) {
+        try {
+            const stock = state.portfolio[index];
+            const marketStock = marketStocks.find(s => s.name === stock.name);
+            const quantityInput = document.getElementById("sellQuantity");
+            const sellQuantity = parseInt(quantityInput.value);
+
+            if (isNaN(sellQuantity) || sellQuantity <= 0 || sellQuantity > stock.quantity) {
+                throw new Error("Invalid sell quantity");
+            }
+
+            const salePrice = marketStock.price * sellQuantity;
+            const profitLoss = (marketStock.price - stock.buyPrice) * sellQuantity;
+
+            // Update wallet and portfolio
+            state.wallet += salePrice;
+            stock.quantity -= sellQuantity;
+
+            if (stock.quantity === 0) {
+                state.portfolio.splice(index, 1);
+            }
+
+            // Record trade
+            state.tradeHistory.unshift({
+                type: "SELL",
+                name: stock.name,
+                quantity: sellQuantity,
+                price: marketStock.price,
+                total: salePrice,
+                profitLoss: profitLoss,
+                timestamp: new Date().toISOString()
+            });
+
+            // Save state
+            saveState();
+            updatePortfolioView();
+            updateTradeHistory();
+            closeSellModal();
+
+        } catch (error) {
+            console.error("Sale execution error:", error);
+            alert("Failed to execute sale. Please try again.");
+        }
+    }
+
+    function closeSellModal() {
+        document.getElementById("sellModal").style.display = "none";
+    }
+
+    function showStockDetails(index) {
+        const stock = state.portfolio[index];
+        const marketStock = marketStocks.find(s => s.name === stock.name);
+        
+        if (!marketStock) {
+            alert("Stock details not available");
+            return;
+        }
+        
+        // Calculate performance metrics
+        const invested = stock.buyPrice * stock.quantity;
+        const currentValue = marketStock.price * stock.quantity;
+        const profit = currentValue - invested;
+        const profitPercentage = invested > 0 ? (profit / invested) * 100 : 0;
+        
+        // Format the alert message
+        const message = `
+            Stock: ${stock.name}
+            Current Price: ${formatCurrency(marketStock.price)}
+            Initial Price: ${formatCurrency(marketStock.initialPrice || marketStock.price)}
+            Daily Change: ${marketStock.change ? marketStock.change.toFixed(2) : "0.00"}%
+            
+            Quantity Owned: ${stock.quantity}
+            Average Buy Price: ${formatCurrency(stock.buyPrice)}
+            Total Investment: ${formatCurrency(invested)}
+            Current Value: ${formatCurrency(currentValue)}
+            
+            Profit/Loss: ${formatCurrency(profit)} (${profitPercentage.toFixed(2)}%)
+        `;
+        
+        alert(message);
+    }
+
+    // Trade history functions
+    function updateTradeHistory() {
+        const tradeHistoryList = document.getElementById("tradeHistory");
+        if (!tradeHistoryList) return;
+        
+        tradeHistoryList.innerHTML = "";
+
+        if (state.tradeHistory.length === 0) {
+            const emptyItem = document.createElement("li");
+            emptyItem.className = "trade-item";
+            emptyItem.innerHTML = "<div class='trade-details'><em>No trade history available</em></div>";
+            tradeHistoryList.appendChild(emptyItem);
+            return;
+        }
+
+        state.tradeHistory.slice(0, 50).forEach(trade => {
+            const li = document.createElement("li");
+            li.className = "trade-item";
+            
+            // Add try-catch for date parsing
+            let dateStr = "Unknown date";
+            try {
+                const date = new Date(trade.timestamp);
+                dateStr = date.toLocaleString();
+            } catch (e) {
+                console.error("Error parsing date:", e);
+            }
+            
+            li.innerHTML = `
+                <div class="trade-details">
+                    <strong>${trade.type}: ${trade.name}</strong>
+                    <div>
+                        ${trade.quantity} shares at ${formatCurrency(trade.price)} = ${formatCurrency(trade.total)}
+                    </div>
+                    <div class="trade-timestamp">${dateStr}</div>
+                </div>
+                <div class="${trade.profitLoss >= 0 ? 'success' : 'danger'}">
+                    ${trade.type === "SELL" ? formatCurrency(trade.profitLoss) : ""}
+                </div>
+            `;
+            
+            tradeHistoryList.appendChild(li);
+        });
+    }
+
+    function clearTradeHistory() {
+        if (confirm("Are you sure you want to clear your trade history?")) {
+            state.tradeHistory = [];
+            saveState();
+            updateTradeHistory();
+        }
+    }
+
+    // Toggle view mode
+    function toggleView() {
+        state.viewMode = state.viewMode === "grid" ? "list" : "grid";
+        localStorage.setItem("viewMode", state.viewMode);
+        updatePortfolioView();
+    }
+
+    // Save current state to localStorage
+    function saveState() {
+        localStorage.setItem("wallet", JSON.stringify(state.wallet));
+        localStorage.setItem("portfolio", JSON.stringify(state.portfolio));
+        localStorage.setItem("tradeHistory", JSON.stringify(state.tradeHistory));
+    }
+
+    // Initialize the page
+    function initPage() {
+        updatePortfolioView();
+        updateTradeHistory();
+        
+        // Set up price updates
+        setInterval(updateLiveStockPrices, 3000);
+        
+        // Attach event listeners
+        window.onclick = function(event) {
+            const modal = document.getElementById("sellModal");
+            if (event.target === modal) {
+                closeSellModal();
+            }
+        };
+    }
+
+    // Run initialization
+    document.addEventListener("DOMContentLoaded", initPage);
+    </script>
+</body>
+</html>

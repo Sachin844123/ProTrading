@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market - ProTrade</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for animated charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="market.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+        
+        .tab-active {
+            color: #4f46e5;
+            border-bottom: 3px solid #4f46e5;
+        }
+        
+        .stock-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stock-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Enhanced price animations */
+        .price-up {
+            color: #10b981;
+            animation: pricePulse 0.6s ease-out;
+        }
+        
+        .price-down {
+            color: #ef4444;
+            animation: pricePulse 0.6s ease-out;
+        }
+        
+        @keyframes pricePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .wallet-card {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        }
+        
+        .portfolio-summary {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        
+        .watchlist-star {
+            color: #f59e0b;
+        }
+        
+        .trade-history-item:nth-child(odd) {
+            background-color: #f8fafc;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Slide animations */
+        .tab-content {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .slide-enter {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .slide-enter-active {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 300ms, transform 300ms;
+        }
+        
+        .slide-exit {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-exit-active {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 300ms, transform 300ms;
+        }
+
+        /* Loading animations */
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #4f46e5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1f2937;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1f2937 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Chart container styles */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mini chart styles */
+        .mini-chart {
+            width: 100px;
+            height: 40px;
+            background: #f8fafc;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mini-chart-line {
+            stroke: #4f46e5;
+            stroke-width: 2;
+            fill: none;
+            animation: drawLine 1s ease-out;
+        }
+
+        @keyframes drawLine {
+            from { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+            to { stroke-dasharray: 1000; stroke-dashoffset: 0; }
+        }
+
+        /* Responsive chart */
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 250px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function StockMarket() {
+            // Generate random chart data for each stock
+            function generateChartData() {
+                const data = [];
+                let basePrice = Math.random() * 1000 + 100;
+                for (let i = 0; i < 20; i++) {
+                    basePrice += (Math.random() - 0.5) * 50;
+                    data.push(Math.max(basePrice, 10));
+                }
+                return data;
+            }
+
+            const initialStocks = [
+                { name: "TCS", price: 3500, prevPrice: 3500, chartData: generateChartData() },
+                { name: "Reliance", price: 2700, prevPrice: 2700, chartData: generateChartData() },
+                { name: "Infosys", price: 1600, prevPrice: 1600, chartData: generateChartData() },
+                { name: "HDFC Bank", price: 1500, prevPrice: 1500, chartData: generateChartData() },
+                { name: "ICICI Bank", price: 930, prevPrice: 930, chartData: generateChartData() },
+                { name: "Tata Motors", price: 670, prevPrice: 670, chartData: generateChartData() },
+                { name: "SBI", price: 600, prevPrice: 600, chartData: generateChartData() },
+                { name: "HUL", price: 2500, prevPrice: 2500, chartData: generateChartData() },
+                { name: "Bharti Airtel", price: 1150, prevPrice: 1150, chartData: generateChartData() },
+                { name: "Asian Paints", price: 2800, prevPrice: 2800, chartData: generateChartData() },
+                { name: "ITC", price: 420, prevPrice: 420, chartData: generateChartData() },
+                { name: "L&T", price: 3200, prevPrice: 3200, chartData: generateChartData() },
+                { name: "Axis Bank", price: 1020, prevPrice: 1020, chartData: generateChartData() },
+                { name: "Maruti Suzuki", price: 10500, prevPrice: 10500, chartData: generateChartData() },
+                { name: "Wipro", price: 450, prevPrice: 450, chartData: generateChartData() },
+                { name: "Sun Pharma", price: 1400, prevPrice: 1400, chartData: generateChartData() },
+                { name: "Bajaj Finance", price: 6800, prevPrice: 6800, chartData: generateChartData() },
+                { name: "NTPC", price: 280, prevPrice: 280, chartData: generateChartData() },
+                { name: "Power Grid", price: 240, prevPrice: 240, chartData: generateChartData() },
+                { name: "Tech Mahindra", price: 1250, prevPrice: 1250, chartData: generateChartData() },
+                { name: "Hero MotoCorp", price: 3100, prevPrice: 3100, chartData: generateChartData() },
+                { name: "Titan", price: 3400, prevPrice: 3400, chartData: generateChartData() },
+                { name: "Nestle India", price: 24500, prevPrice: 24500, chartData: generateChartData() },
+                { name: "Coal India", price: 320, prevPrice: 320, chartData: generateChartData() },
+                { name: "UltraTech Cement", price: 8900, prevPrice: 8900, chartData: generateChartData() },
+                { name: "Dr Reddy's", price: 5600, prevPrice: 5600, chartData: generateChartData() },
+                { name: "Adani Ports", price: 850, prevPrice: 850, chartData: generateChartData() },
+                { name: "Grasim", price: 2100, prevPrice: 2100, chartData: generateChartData() },
+                { name: "JSW Steel", price: 840, prevPrice: 840, chartData: generateChartData() },
+                { name: "Tata Steel", price: 130, prevPrice: 130, chartData: generateChartData() },
+                { name: "M&M", price: 1650, prevPrice: 1650, chartData: generateChartData() },
+                { name: "Bajaj Auto", price: 7200, prevPrice: 7200, chartData: generateChartData() },
+                { name: "Cipla", price: 1180, prevPrice: 1180, chartData: generateChartData() },
+                { name: "BPCL", price: 460, prevPrice: 460, chartData: generateChartData() },
+                { name: "IndusInd Bank", price: 1480, prevPrice: 1480, chartData: generateChartData() },
+                { name: "Britannia", price: 4600, prevPrice: 4600, chartData: generateChartData() },
+                { name: "ONGC", price: 210, prevPrice: 210, chartData: generateChartData() },
+                { name: "Eicher Motors", price: 3850, prevPrice: 3850, chartData: generateChartData() },
+                { name: "Tata Consumer", price: 960, prevPrice: 960, chartData: generateChartData() },
+                { name: "Hindalco", price: 520, prevPrice: 520, chartData: generateChartData() }
+            ];
+        
+            // Initialize stocks from localStorage or use initial values
+            const [stocks, setStocks] = React.useState(() => {
+                try {
+                    const savedStocks = localStorage.getItem('stocks');
+                    return savedStocks ? JSON.parse(savedStocks) : initialStocks;
+                } catch (error) {
+                    console.error("Error loading stocks from localStorage:", error);
+                    return initialStocks;
+                }
+            });
+        
+            const [searchTerm, setSearchTerm] = React.useState('');
+            const [wallet, setWallet] = React.useState(() => {
+                try {
+                    const savedWallet = localStorage.getItem('wallet');
+                    return savedWallet ? Number(savedWallet) : 100000;
+                } catch (error) {
+                    console.error("Error loading wallet from localStorage:", error);
+                    return 100000;
+                }
+            });
+            const [selectedStock, setSelectedStock] = React.useState(null);
+            const [quantity, setQuantity] = React.useState(1);
+            const [portfolio, setPortfolio] = React.useState(() => {
+                try {
+                    const savedPortfolio = localStorage.getItem('portfolio');
+                    return savedPortfolio ? JSON.parse(savedPortfolio) : [];
+                } catch (error) {
+                    console.error("Error loading portfolio from localStorage:", error);
+                    return [];
+                }
+            });
+            const [watchlist, setWatchlist] = React.useState(() => {
+                try {
+                    const savedWatchlist = localStorage.getItem('watchlist');
+                    return savedWatchlist ? JSON.parse(savedWatchlist) : [];
+                } catch (error) {
+                    console.error("Error loading watchlist from localStorage:", error);
+                    return [];
+                }
+            });
+            const [activeTab, setActiveTab] = React.useState('market');
+        
+            // Price updates effect
+            React.useEffect(() => {
+                const timer = setInterval(() => {
+                    setStocks(prevStocks => {
+                        try {
+                            const updatedStocks = prevStocks.map(stock => {
+                                const prevPrice = stock.price;
+                                let change = 0;
+                                
+                                if (stock.price < 1000) change = Math.random() * 5;
+                                else if (stock.price < 2000) change = Math.random() * 10;
+                                else if (stock.price < 5000) change = Math.random() * 25;
+                                else if (stock.price < 10000) change = Math.random() * 50;
+                                else change = Math.random() * 100;
+                                
+                                const direction = Math.random() < 0.5 ? -1 : 1;
+                                const newPrice = Math.max(stock.price + direction * change, 1);
+                                
+                                return {
+                                    ...stock,
+                                    prevPrice,
+                                    price: parseFloat(newPrice.toFixed(2))
+                                };
+                            });
+                            
+                            localStorage.setItem('stocks', JSON.stringify(updatedStocks));
+                            return updatedStocks;
+                        } catch (error) {
+                            console.error("Error updating stock prices:", error);
+                            return prevStocks;
+                        }
+                    });
+                }, 2000);
+        
+                return () => clearInterval(timer);
+            }, []);  
+        
+            // Update portfolio when stock prices change
+            React.useEffect(() => {
+                if (portfolio.length > 0) {
+                    try {
+                        const updatedPortfolio = portfolio.map(position => {
+                            const currentStock = stocks.find(s => s.name === position.name);
+                            if (currentStock) {
+                                return {
+                                    ...position,
+                                    currentPrice: currentStock.price
+                                };
+                            }
+                            return position;
+                        });
+                        
+                        setPortfolio(updatedPortfolio);
+                    } catch (error) {
+                        console.error("Error updating portfolio with new prices:", error);
+                    }
+                }
+            }, [stocks, portfolio.length]);
+        
+            // localStorage updates effect
+            React.useEffect(() => {
+                try {
+                    localStorage.setItem('wallet', wallet.toString());
+                    localStorage.setItem('portfolio', JSON.stringify(portfolio));
+                    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+                } catch (error) {
+                    console.error("Error saving to localStorage:", error);
+                }
+            }, [wallet, portfolio, watchlist]);
+        
+            // Buying stocks
+            const buyStock = (stock) => {
+                try {
+                    if (!stock) {
+                        alert('Please select a stock to buy.');
+                        return;
+                    }
+                    
+                    const totalCost = stock.price * quantity;
+                    if (totalCost > wallet) {
+                        alert('Insufficient funds!');
+                        return;
+                    }
+        
+                    // Update wallet
+                    const newWallet = wallet - totalCost;
+                    setWallet(newWallet);
+        
+                    // Update portfolio
+                    const existingPosition = portfolio.find(p => p.name === stock.name);
+                    let updatedPortfolio;
+        
+                    if (existingPosition) {
+                        const totalShares = existingPosition.quantity + quantity;
+                        updatedPortfolio = portfolio.map(p => 
+                            p.name === stock.name 
+                                ? { 
+                                    ...p, 
+                                    quantity: totalShares,
+                                    buyPrice: parseFloat(((p.buyPrice * p.quantity + stock.price * quantity) / totalShares).toFixed(2)),
+                                    currentPrice: stock.price
+                                }
+                                : p
+                        );
+                    } else {
+                        updatedPortfolio = [...portfolio, { 
+                            name: stock.name, 
+                            quantity, 
+                            buyPrice: parseFloat(stock.price.toFixed(2)),
+                            currentPrice: stock.price
+                        }];
+                    }
+        
+                    setPortfolio(updatedPortfolio);
+                    alert(`Successfully bought ${quantity} shares of ${stock.name}`);
+                } catch (error) {
+                    console.error("Error buying stock:", error);
+                    alert('An error occurred while buying stock.');
+                }
+            };
+        
+            // Selling stocks
+            const sellStock = (stock) => {
+                try {
+                    if (!stock) {
+                        alert('Please select a stock to sell.');
+                        return;
+                    }
+                    
+                    const position = portfolio.find(p => p.name === stock.name);
+                    if (!position) {
+                        alert(`You don't own any shares of ${stock.name}!`);
+                        return;
+                    }
+                    
+                    if (position.quantity < quantity) {
+                        alert(`You only have ${position.quantity} shares to sell!`);
+                        return;
+                    }
+        
+                    const saleValue = stock.price * quantity;
+                    
+                    // Update wallet
+                    const newWallet = wallet + saleValue;
+                    setWallet(newWallet);
+        
+                    // Update portfolio
+                    const updatedPortfolio = portfolio.map(p => 
+                        p.name === stock.name 
+                            ? { ...p, quantity: p.quantity - quantity }
+                            : p
+                    ).filter(p => p.quantity > 0);
+                    
+                    setPortfolio(updatedPortfolio);
+                    alert(`Successfully sold ${quantity} shares of ${stock.name}`);
+                } catch (error) {
+                    console.error("Error selling stock:", error);
+                    alert('An error occurred while selling stock.');
+                }
+            };
+        
+            // Toggle watchlist
+            const toggleWatchlist = (stockName) => {
+                try {
+                    if (!stockName) return;
+                    
+                    if (watchlist.includes(stockName)) {
+                        setWatchlist(watchlist.filter(name => name !== stockName));
+                    } else {
+                        setWatchlist([...watchlist, stockName]);
+                    }
+                } catch (error) {
+                    console.error("Error toggling watchlist:", error);
+                }
+            };
+        
+            // Reset market
+            const resetMarket = () => {
+                try {
+                    if (window.confirm("Are you sure you want to reset the market? This will reset all prices to their initial values.")) {
+                        setStocks(initialStocks);
+                        localStorage.setItem('stocks', JSON.stringify(initialStocks));
+                        alert("Market has been reset successfully.");
+                    }
+                } catch (error) {
+                    console.error("Error resetting market:", error);
+                    alert('An error occurred while resetting the market.');
+                }
+            };
+        
+            // Reset everything
+            const resetEverything = () => {
+                try {
+                    if (window.confirm("Are you sure you want to reset everything? This will clear your portfolio, watchlist, and reset your wallet.")) {
+                        setStocks(initialStocks);
+                        setWallet(100000);
+                        setPortfolio([]);
+                        setWatchlist([]);
+                        localStorage.setItem('stocks', JSON.stringify(initialStocks));
+                        localStorage.setItem('wallet', '100000');
+                        localStorage.setItem('portfolio', '[]');
+                        localStorage.setItem('watchlist', '[]');
+                        alert("All data has been reset successfully.");
+                    }
+                } catch (error) {
+                    console.error("Error resetting everything:", error);
+                    alert('An error occurred while resetting the data.');
+                }
+            };
+        
+            // Calculate total portfolio value
+            const calculatePortfolioValue = () => {
+                return portfolio.reduce((total, position) => {
+                    return total + (position.currentPrice * position.quantity);
+                }, 0);
+            };
+        
+            // Calculate total profit/loss
+            const calculateTotalProfitLoss = () => {
+                return portfolio.reduce((total, position) => {
+                    const positionValue = position.currentPrice * position.quantity;
+                    const costBasis = position.buyPrice * position.quantity;
+                    return total + (positionValue - costBasis);
+                }, 0);
+            };
+        
+            // Handle quantity change
+            const handleQuantityChange = (e) => {
+                const value = parseInt(e.target.value);
+                if (isNaN(value) || value < 1) {
+                    setQuantity(1);
+                } else {
+                    setQuantity(value);
+                }
+            };
+        
+            // Filter stocks based on search term
+            const filteredStocks = stocks.filter(stock => 
+                stock.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        
+            // Calculate portfolio metrics
+            const portfolioValue = calculatePortfolioValue();
+            const totalProfitLoss = calculateTotalProfitLoss();
+            const totalProfitLossPercent = portfolio.length > 0 
+                ? (totalProfitLoss / (portfolioValue - totalProfitLoss)) * 100 
+                : 0;
+        
+            // Add this function to handle tab changes
+            const handleTabChange = (tab) => {
+                setActiveTab(tab);
+            };
+        
+            return (
+                <div className="market-container w-full max-w-6xl mx-auto my-8 px-4">
+                    <h1 className="text-4xl font-bold text-slate-800 mb-6">Stock Market Simulator</h1>
+                    
+                    {/* Dashboard */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div className="bg-gradient-to-r from-indigo-600 to-indigo-500 text-white p-6 rounded-xl shadow-lg">
+                            <h2 className="text-lg opacity-90 mb-1">Cash Balance</h2>
+                            <p className="text-3xl font-semibold">₹{wallet.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                        </div>
+                        
+                        <div className={`bg-gradient-to-r ${totalProfitLoss >= 0 ? 'from-green-600 to-green-500' : 'from-red-600 to-red-500'} text-white p-6 rounded-xl shadow-lg`}>
+                            <h2 className="text-lg opacity-90 mb-1">Portfolio Value</h2>
+                            <p className="text-3xl font-semibold">₹{portfolioValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                            {portfolio.length > 0 && (
+                                <p className="mt-2">
+                                    {totalProfitLoss >= 0 ? '+' : ''}₹{totalProfitLoss.toLocaleString('en-IN', { maximumFractionDigits: 2 })} 
+                                    ({totalProfitLossPercent >= 0 ? '+' : ''}{totalProfitLossPercent.toFixed(2)}%)
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="bg-gradient-to-r from-purple-600 to-purple-500 text-white p-6 rounded-xl shadow-lg">
+                            <h2 className="text-lg opacity-90 mb-1">Total Holdings</h2>
+                            <p className="text-3xl font-semibold">{portfolio.length}</p>
+                            <p className="mt-2">Active Positions</p>
+                        </div>
+                    </div>
+
+                    {/* Navigation Tabs */}
+                    <div className="flex space-x-4 mb-8 border-b border-slate-200">
+                        <button
+                            onClick={() => handleTabChange('market')}
+                            className={`px-6 py-3 font-medium text-lg transition-colors ${
+                                activeTab === 'market' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-600 hover:text-indigo-600'
+                            }`}
+                        >
+                            Market
+                        </button>
+                        <button
+                            onClick={() => handleTabChange('portfolio')}
+                            className={`px-6 py-3 font-medium text-lg transition-colors ${
+                                activeTab === 'portfolio' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-600 hover:text-indigo-600'
+                            }`}
+                        >
+                            Portfolio
+                        </button>
+                        <button
+                            onClick={() => handleTabChange('watchlist')}
+                            className={`px-6 py-3 font-medium text-lg transition-colors ${
+                                activeTab === 'watchlist' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-600 hover:text-indigo-600'
+                            }`}
+                        >
+                            Watchlist
+                        </button>
+                    </div>
+
+                    {/* Search and Reset Buttons */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                        <input 
+                            type="text"
+                            placeholder="Search stocks..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full md:flex-1 px-6 py-4 text-lg border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
+                        />
+                        <div className="flex gap-4 w-full md:w-auto">
+                            <button
+                                onClick={resetMarket}
+                                className="w-full md:w-auto px-6 py-4 bg-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-300 transition-colors"
+                            >
+                                Reset Market
+                            </button>
+                            <button
+                                onClick={resetEverything}
+                                className="w-full md:w-auto px-6 py-4 bg-red-100 text-red-700 font-medium rounded-xl hover:bg-red-200 transition-colors"
+                            >
+                                Reset Everything
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Tab Content */}
+                    <div className="relative">
+                        {/* Market Tab */}
+                        <div className={`transition-all duration-300 ${activeTab === 'market' ? 'block' : 'hidden'}`}>
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">All Stocks</h2>
+                            <div className="space-y-4">
+                                {filteredStocks.length > 0 ? (
+                                    filteredStocks.map(stock => (
+                                        <div 
+                                            key={stock.name}
+                                            className={`bg-white rounded-xl border border-slate-200 p-6 shadow-sm transition-all duration-200
+                                                ${selectedStock?.name === stock.name ? 'ring-2 ring-indigo-500' : 'hover:shadow-md'}`}
+                                            onClick={() => setSelectedStock(stock)}
+                                        >
+                                            <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+                                                <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                                                    <h3 className="text-xl font-semibold text-slate-800">{stock.name}</h3>
+                                                    {watchlist.includes(stock.name) && (
+                                                        <span className="text-blue-500">★</span>
+                                                    )}
+                                                </div>
+                                                
+                                                <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                                                    <div className="flex flex-col items-end">
+                                                        <span className={`text-lg font-medium ${
+                                                            stock.price > stock.prevPrice ? 'text-green-500' : 'text-red-500'
+                                                        }`}>
+                                                            ₹{stock.price.toFixed(2)}
+                                                        </span>
+                                                        <span className={`text-sm ${
+                                                            stock.price > stock.prevPrice ? 'text-green-500' : 'text-red-500'
+                                                        }`}>
+                                                            {stock.price > stock.prevPrice ? '+' : ''}
+                                                            {(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
+                                                        </span>
+                                                    </div>
+        
+                                                    {selectedStock?.name === stock.name && (
+                                                        <div className="flex flex-wrap items-center gap-3">
+                                                            <input
+                                                                type="number"
+                                                                min="1"
+                                                                value={quantity}
+                                                                onChange={handleQuantityChange}
+                                                                className="w-24 px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500"
+                                                                onClick={e => e.stopPropagation()}
+                                                            />
+                                                            <button 
+                                                                onClick={e => {
+                                                                    e.stopPropagation();
+                                                                    buyStock(stock);
+                                                                }}
+                                                                className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+                                                            >
+                                                                Buy
+                                                            </button>
+                                                            <button 
+                                                                onClick={e => {
+                                                                    e.stopPropagation();
+                                                                    sellStock(stock);
+                                                                }}
+                                                                className="px-6 py-2 border-2 border-red-500 text-red-500 font-medium rounded-lg hover:bg-red-50 transition-colors"
+                                                            >
+                                                                Sell
+                                                            </button>
+                                                            <button
+                                                                onClick={e => {
+                                                                    e.stopPropagation();
+                                                                    toggleWatchlist(stock.name);
+                                                                }}
+                                                                className="px-6 py-2 border-2 border-slate-200 text-slate-600 font-medium rounded-lg hover:bg-slate-50 transition-colors"
+                                                            >
+                                                                {watchlist.includes(stock.name) ? 'Unwatch' : 'Watch'}
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+        
+                                            {selectedStock?.name === stock.name && portfolio.find(p => p.name === stock.name) && (
+                                                <div className="mt-4 p-4 bg-slate-50 rounded-lg">
+                                                    <div className="text-slate-600">
+                                                        Your position: {portfolio.find(p => p.name === stock.name).quantity} shares
+                                                        @ avg. ₹{portfolio.find(p => p.name === stock.name).buyPrice.toFixed(2)}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
+                                        <p className="text-xl text-slate-500">No stocks found matching "{searchTerm}"</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Portfolio Tab */}
+                        <div className={`transition-all duration-300 ${activeTab === 'portfolio' ? 'block' : 'hidden'}`}>
+                            {portfolio.length > 0 ? (
+                                <div className="space-y-6">
+                                    {/* Portfolio Summary Cards */}
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                            <h3 className="text-lg font-medium text-slate-600 mb-2">Total Investment</h3>
+                                            <p className="text-2xl font-bold text-slate-800">
+                                                ₹{portfolio.reduce((total, pos) => total + (pos.buyPrice * pos.quantity), 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                                            </p>
+                                        </div>
+                                        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                            <h3 className="text-lg font-medium text-slate-600 mb-2">Current Value</h3>
+                                            <p className="text-2xl font-bold text-slate-800">
+                                                ₹{portfolioValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                                            </p>
+                                        </div>
+                                        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                            <h3 className="text-lg font-medium text-slate-600 mb-2">Total P/L</h3>
+                                            <p className={`text-2xl font-bold ${totalProfitLoss >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                {totalProfitLoss >= 0 ? '+' : ''}₹{totalProfitLoss.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Portfolio Table */}
+                                    <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                                        <div className="overflow-x-auto">
+                                            <table className="w-full">
+                                                <thead>
+                                                    <tr className="border-b border-slate-200">
+                                                        <th className="text-left py-3 px-4 text-slate-500 font-medium">Stock</th>
+                                                        <th className="text-right py-3 px-4 text-slate-500 font-medium">Quantity</th>
+                                                        <th className="text-right py-3 px-4 text-slate-500 font-medium">Avg. Buy Price</th>
+                                                        <th className="text-right py-3 px-4 text-slate-500 font-medium">Current Price</th>
+                                                        <th className="text-right py-3 px-4 text-slate-500 font-medium">Total Value</th>
+                                                        <th className="text-right py-3 px-4 text-slate-500 font-medium">Profit/Loss</th>
+                                                        <th className="text-right py-3 px-4 text-slate-500 font-medium">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {portfolio.map(position => {
+                                                        const totalValue = position.currentPrice * position.quantity;
+                                                        const profitLoss = (position.currentPrice - position.buyPrice) * position.quantity;
+                                                        const profitLossPercent = ((position.currentPrice - position.buyPrice) / position.buyPrice) * 100;
+                                                        const currentStock = stocks.find(s => s.name === position.name);
+                                                        
+                                                        return (
+                                                            <tr key={position.name} className="border-b border-slate-100 hover:bg-slate-50">
+                                                                <td className="py-3 px-4 font-medium">{position.name}</td>
+                                                                <td className="py-3 px-4 text-right">{position.quantity}</td>
+                                                                <td className="py-3 px-4 text-right">₹{position.buyPrice.toFixed(2)}</td>
+                                                                <td className="py-3 px-4 text-right">₹{position.currentPrice.toFixed(2)}</td>
+                                                                <td className="py-3 px-4 text-right">₹{totalValue.toFixed(2)}</td>
+                                                                <td className={`py-3 px-4 text-right font-medium ${profitLoss >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                                    {profitLoss >= 0 ? '+' : ''}₹{profitLoss.toFixed(2)} ({profitLossPercent >= 0 ? '+' : ''}{profitLossPercent.toFixed(2)}%)
+                                                                </td>
+                                                                <td className="py-3 px-4 text-right">
+                                                                    <div className="flex items-center justify-end space-x-2">
+                                                                        <div className="flex items-center space-x-2">
+                                                                            <input
+                                                                                type="number"
+                                                                                min="1"
+                                                                                value={selectedStock?.name === position.name ? quantity : 1}
+                                                                                onChange={handleQuantityChange}
+                                                                                className="w-20 px-2 py-1 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 text-sm"
+                                                                                onClick={e => {
+                                                                                    e.stopPropagation();
+                                                                                    setSelectedStock(currentStock);
+                                                                                }}
+                                                                            />
+                                                                            <button 
+                                                                                onClick={() => {
+                                                                                    setSelectedStock(currentStock);
+                                                                                    setQuantity(1);
+                                                                                    buyStock(currentStock);
+                                                                                }}
+                                                                                className="px-3 py-1 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+                                                                            >
+                                                                                Buy
+                                                                            </button>
+                                                                            <button 
+                                                                                onClick={() => {
+                                                                                    setSelectedStock(currentStock);
+                                                                                    setQuantity(1);
+                                                                                    sellStock(currentStock);
+                                                                                }}
+                                                                                className="px-3 py-1 border-2 border-red-500 text-red-500 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors"
+                                                                            >
+                                                                                Sell
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
+                                    <p className="text-xl text-slate-500">Your portfolio is empty. Start trading to build your portfolio!</p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Watchlist Tab */}
+                        <div className={`transition-all duration-300 ${activeTab === 'watchlist' ? 'block' : 'hidden'}`}>
+                            {watchlist.length > 0 ? (
+                                <div className="space-y-4">
+                                    {stocks
+                                        .filter(stock => watchlist.includes(stock.name))
+                                        .map(stock => (
+                                            <div 
+                                                key={stock.name}
+                                                className={`bg-white rounded-xl border border-slate-200 p-6 shadow-sm transition-all duration-200
+                                                    ${selectedStock?.name === stock.name ? 'ring-2 ring-indigo-500' : 'hover:shadow-md'}`}
+                                                onClick={() => setSelectedStock(stock)}
+                                            >
+                                                <div className="flex justify-between items-center">
+                                                    <div className="flex items-center space-x-4">
+                                                        <h3 className="text-xl font-semibold text-slate-800">{stock.name}</h3>
+                                                        <span className="text-blue-500">★</span>
+                                                    </div>
+                                                    
+                                                    <div className="flex items-center space-x-6">
+                                                        <div className="flex flex-col items-end">
+                                                            <span className={`text-lg font-medium ${
+                                                                stock.price > stock.prevPrice ? 'text-green-500' : 'text-red-500'
+                                                            }`}>
+                                                                ₹{stock.price.toFixed(2)}
+                                                            </span>
+                                                            <span className={`text-sm ${
+                                                                stock.price > stock.prevPrice ? 'text-green-500' : 'text-red-500'
+                                                            }`}>
+                                                                {stock.price > stock.prevPrice ? '+' : ''}
+                                                                {(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
+                                                            </span>
+                                                        </div>
+            
+                                                        {selectedStock?.name === stock.name && (
+                                                            <div className="flex items-center space-x-3">
+                                                                <input
+                                                                    type="number"
+                                                                    min="1"
+                                                                    value={quantity}
+                                                                    onChange={handleQuantityChange}
+                                                                    className="w-24 px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500"
+                                                                    onClick={e => e.stopPropagation()}
+                                                                />
+                                                                <button 
+                                                                    onClick={e => {
+                                                                        e.stopPropagation();
+                                                                        buyStock(stock);
+                                                                    }}
+                                                                    className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+                                                                >
+                                                                    Buy
+                                                                </button>
+                                                                <button 
+                                                                    onClick={e => {
+                                                                        e.stopPropagation();
+                                                                        sellStock(stock);
+                                                                    }}
+                                                                    className="px-6 py-2 border-2 border-red-500 text-red-500 font-medium rounded-lg hover:bg-red-50 transition-colors"
+                                                                >
+                                                                    Sell
+                                                                </button>
+                                                                <button
+                                                                    onClick={e => {
+                                                                        e.stopPropagation();
+                                                                        toggleWatchlist(stock.name);
+                                                                    }}
+                                                                    className="px-6 py-2 border-2 border-slate-200 text-slate-600 font-medium rounded-lg hover:bg-slate-50 transition-colors"
+                                                                >
+                                                                    Unwatch
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+            
+                                                {selectedStock?.name === stock.name && portfolio.find(p => p.name === stock.name) && (
+                                                    <div className="mt-4 p-4 bg-slate-50 rounded-lg">
+                                                        <div className="text-slate-600">
+                                                            Your position: {portfolio.find(p => p.name === stock.name).quantity} shares
+                                                            @ avg. ₹{portfolio.find(p => p.name === stock.name).buyPrice.toFixed(2)}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
+                                    <p className="text-xl text-slate-500">Your watchlist is empty. Add stocks to your watchlist to track them!</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<StockMarket />, document.getElementById('root'));
+    </script>
+</body>
+</html>
+
