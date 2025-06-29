@@ -1,0 +1,2713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- Remove the CDN Tailwind link and add compiled CSS -->
+  <link href="./dist/output.css" rel="stylesheet">
+  
+  <!-- Remove Babel CDN and add compiled JavaScript -->
+  <script src="./dist/bundle.js" defer></script>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ProTrade - Your ultimate virtual trading platform with real-time market data">
+  <meta name="keywords" content="trading, stocks, virtual trading, finance, investment">
+  <title>ProTrade - Your Ultimate Trading Companion</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-logo">
+          <a href="index.html">
+            <h2><i class="fas fa-chart-line"></i> ProTrade</h2>
+          </a>
+        </div>
+        
+        <div class="nav-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        
+        <ul class="nav-menu">
+          <li><a href="market.html"><i class="fas fa-chart-bar"></i> Market</a></li>
+          <li><a href="forex.html"><i class="fas fa-graduation-cap"></i> ForexTrade</a></li>
+          <li><a href="bitcoin.html"><i class="fas fa-chart-bar"></i> crypto</a></li>
+          <li><a href="news.html"><i class="far fa-newspaper"></i> News</a></li>
+          <li><a href="learn.html"><i class="fas fa-graduation-cap"></i> Learn</a></li>
+         
+        </ul>
+        
+        <div class="nav-buttons">
+          <a class="btn btn-outline" href="signin.html">Sign Up</a>
+          <a class="btn btn-primary" href="login.html">Log In</a>
+      </div>
+      
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+       
+        <div class="hero-right">
+          <h1>Master The Market with <span class="highlight">ProTrade</span></h1>
+          <p>Experience the thrill of stock trading without financial risk. Our platform offers virtual trading with real-time market data, powerful analytics, and educational resources.</p>
+          
+          <div class="stock-ticker">
+            <div class="ticker-wrap">
+              <div class="ticker">
+                <div class="ticker-item up"><i class="fas fa-arrow-up"></i> RELIANCE: ₹2,500.00 (+1.50%)</div>
+                <div class="ticker-item down"><i class="fas fa-arrow-down"></i> TCS: ₹3,600.75 (-0.75%)</div>
+                <div class="ticker-item up"><i class="fas fa-arrow-up"></i> INFY: ₹1,550.85 (+0.85%)</div>
+                <div class="ticker-item up"><i class="fas fa-arrow-up"></i> HDFC BANK: ₹1,620.50 (+1.20%)</div>
+                <div class="ticker-item down"><i class="fas fa-arrow-down"></i> ICICI BANK: ₹765.30 (-0.45%)</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="hero-cta">
+            <button class="btn btn-large btn-primary" onclick="location.href='sign.html'">
+              <a href="signin.html" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+                  Get Started for Free <i class="fas fa-arrow-right"></i>
+              </a>
+          </button>
+          
+            <button class="btn btn-large btn-outline watch-demo">
+              <i class="fas fa-play-circle"></i> Watch Demo
+            </button>
+          </div>
+        </section>
+
+          <!-- Market Indices Section -->
+          <section class="indices-section">
+            <div class="container">
+              <div class="section-header">
+                <h2>Market Indices</h2>
+                <p>Track major Indian, global, forex, and cryptocurrency indices in real-time</p>
+              </div>
+              
+              <div class="indices-tabs">
+                <button class="tab-btn active" data-tab="indian">Indian</button>
+                <button class="tab-btn" data-tab="global">Global</button>
+                <button class="tab-btn" data-tab="forex">Forex</button>
+                <button class="tab-btn" data-tab="crypto">Crypto</button>
+              </div>
+              
+              <div class="indices-content">
+                <!-- Indian Indices -->
+                <div class="tab-content active" id="indian-indices">
+                  <div class="indices-grid">
+                    <div class="index-card up">
+                      <div class="index-header"><h3>NIFTY 50</h3><div class="index-value">22,845.15</div></div>
+                      <div class="index-stats"><div class="stat-item up"><span>Change</span><span>+185.70 (+0.82%)</span></div></div>
+                    </div>
+                    <div class="index-card up">
+                      <div class="index-header"><h3>SENSEX</h3><div class="index-value">75,048.87</div></div>
+                      <div class="index-stats"><div class="stat-item up"><span>Change</span><span>+595.25 (+0.80%)</span></div></div>
+                    </div>
+                  </div>
+                </div>
+          
+                <!-- Global Indices -->
+                <div class="tab-content" id="global-indices">
+                  <div class="indices-grid">
+                    <div class="index-card up"><h3>NASDAQ</h3><div class="index-value">14,058.87</div><div class="stat-item up"><span>Change</span><span>+110.25 (+0.79%)</span></div></div>
+                    <div class="index-card down"><h3>S&P 500</h3><div class="index-value">4,305.12</div><div class="stat-item down"><span>Change</span><span>-12.75 (-0.29%)</span></div></div>
+                    <div class="index-card up"><h3>FTSE 100</h3><div class="index-value">7,652.45</div><div class="stat-item up"><span>Change</span><span>+45.10 (+0.59%)</span></div></div>
+                  </div>
+                </div>
+          
+                <!-- Forex Indices -->
+                <div class="tab-content" id="forex-indices">
+                  <div class="indices-grid">
+                    <div class="index-card up"><h3>USD/INR</h3><div class="index-value">82.45</div><div class="stat-item up"><span>Change</span><span>+0.15 (+0.18%)</span></div></div>
+                    <div class="index-card down"><h3>EUR/INR</h3><div class="index-value">90.32</div><div class="stat-item down"><span>Change</span><span>-0.25 (-0.28%)</span></div></div>
+                    <div class="index-card up"><h3>JPY/INR</h3><div class="index-value">0.63</div><div class="stat-item up"><span>Change</span><span>+0.02 (+3.17%)</span></div></div>
+                  </div>
+                </div>
+          
+                <!-- Crypto Indices -->
+                <div class="tab-content" id="crypto-indices">
+                  <div class="indices-grid">
+                    <div class="index-card up"><h3>Bitcoin</h3><div class="index-value">₹42,30,000</div><div class="stat-item up"><span>Change</span><span>+2.5%</span></div></div>
+                    <div class="index-card down"><h3>Ethereum</h3><div class="index-value">₹2,80,500</div><div class="stat-item down"><span>Change</span><span>-1.8%</span></div></div>
+                    <div class="index-card up"><h3>Solana</h3><div class="index-value">₹12,800</div><div class="stat-item up"><span>Change</span><span>+4.3%</span></div></div>
+                    <div class="index-card up"><h3>Dogecoin</h3><div class="index-value">₹5.12</div><div class="stat-item up"><span>Change</span><span>+6.1%</span></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+          
+        
+
+<!-- Sector-wise Stocks Section -->
+<section class="sector-stocks-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Sector-wise Stocks</h2>
+      <p>Explore stocks categorized by industry sectors</p>
+    </div>
+    
+    <div class="sector-filter">
+      <div class="filter-buttons">
+        <button class="sector-btn active" data-sector="all">All Sectors</button>
+        <button class="sector-btn" data-sector="it">IT</button>
+        <button class="sector-btn" data-sector="banking">Banking</button>
+        <button class="sector-btn" data-sector="pharma">Pharma</button>
+        <button class="sector-btn" data-sector="auto">Auto</button>
+        <button class="sector-btn" data-sector="energy">Energy</button>
+      </div>
+    </div>
+    
+    <div class="sector-content">
+      <!-- IT Sector -->
+      <div class="sector-card" id="it-sector">
+        <div class="sector-header">
+          <div class="sector-info">
+            <h3><i class="fas fa-microchip"></i> IT Sector</h3>
+            <div class="sector-stats">
+              <div class="stat-badge up">
+                <i class="fas fa-arrow-up"></i> +1.2%
+              </div>
+              <div class="market-cap">
+                Market Cap: ₹23.4 Lakh Cr
+              </div>
+            </div>
+          </div>
+          <div class="sector-actions">
+            <button class="btn btn-sm btn-outline">
+              <i class="fas fa-chart-line"></i> Sector Performance
+            </button>
+          </div>
+        </div>
+        
+        <div class="sector-stocks">
+          <table class="stocks-table">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>LTP</th>
+                <th>Change</th>
+                <th>Market Cap</th>
+                <th>52W High/Low</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="stock-name">
+                    <img src="/api/placeholder/32/32" alt="TCS">
+                    <div>
+                      <strong>TCS</strong>
+                      <span>Tata Consultancy Services</span>
+                    </div>
+                  </div>
+                </td>
+                <td>₹3,600.75</td>
+                <td class="up">+1.25%</td>
+                <td>₹13.2 Lakh Cr</td>
+                <td>₹3,928.95 / ₹3,070.30</td>
+                <td>
+                  <button class="btn btn-xs btn-outline">Trade</button>
+                  <button class="btn btn-xs btn-outline add-watchlist">
+                    <i class="far fa-star"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="stock-name">
+                    <img src="/api/placeholder/32/32" alt="Infosys">
+                    <div>
+                      <strong>INFY</strong>
+                      <span>Infosys Limited</span>
+                    </div>
+                  </div>
+                </td>
+                <td>₹1,550.85</td>
+                <td class="up">+0.85%</td>
+                <td>₹6.5 Lakh Cr</td>
+                <td>₹1,672.45 / ₹1,185.30</td>
+                <td>
+                  <button class="btn btn-xs btn-outline">Trade</button>
+                  <button class="btn btn-xs btn-outline add-watchlist">
+                    <i class="far fa-star"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="stock-name">
+                    <img src="/api/placeholder/32/32" alt="HCL Tech">
+                    <div>
+                      <strong>HCLTECH</strong>
+                      <span>HCL Technologies</span>
+                    </div>
+                  </div>
+                </td>
+                <td>₹1,320.50</td>
+                <td class="down">-0.35%</td>
+                <td>₹3.6 Lakh Cr</td>
+                <td>₹1,398.80 / ₹1,016.45</td>
+                <td>
+                  <button class="btn btn-xs btn-outline">Trade</button>
+                  <button class="btn btn-xs btn-outline add-watchlist">
+                    <i class="far fa-star"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+</div>
+        <!-- Pharma Sector -->
+<div class="sector-card" id="pharma-sector">
+  <div class="sector-header">
+    <h3><i class="fas fa-pills"></i> Pharma Sector</h3>
+    <div class="sector-stats"><span class="stat-badge up">+1.4%</span> Market Cap: ₹15.8 Lakh Cr</div>
+  </div>
+  <table class="stocks-table">
+    <thead><tr><th>Company</th><th>LTP</th><th>Change</th><th>Market Cap</th><th>52W High/Low</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Sun Pharma</td><td>₹1,230.45</td><td class="up">+1.25%</td><td>₹5.6 Lakh Cr</td><td>₹1,350 / ₹950</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+      <tr><td>Cipla</td><td>₹950.60</td><td class="down">-0.85%</td><td>₹3.4 Lakh Cr</td><td>₹1,040 / ₹875</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Auto Sector -->
+<div class="sector-card" id="auto-sector">
+  <div class="sector-header">
+    <h3><i class="fas fa-car"></i> Auto Sector</h3>
+    <div class="sector-stats"><span class="stat-badge down">-0.9%</span> Market Cap: ₹10.3 Lakh Cr</div>
+  </div>
+  <table class="stocks-table">
+    <thead><tr><th>Company</th><th>LTP</th><th>Change</th><th>Market Cap</th><th>52W High/Low</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Tata Motors</td><td>₹550.25</td><td class="up">+2.1%</td><td>₹2.3 Lakh Cr</td><td>₹575 / ₹420</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+      <tr><td>Maruti Suzuki</td><td>₹9,250.40</td><td class="down">-0.3%</td><td>₹3.8 Lakh Cr</td><td>₹9,700 / ₹7,850</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Energy Sector -->
+<div class="sector-card" id="energy-sector">
+  <div class="sector-header">
+    <h3><i class="fas fa-bolt"></i> Energy Sector</h3>
+    <div class="sector-stats"><span class="stat-badge up">+2.1%</span> Market Cap: ₹20.5 Lakh Cr</div>
+  </div>
+  <table class="stocks-table">
+    <thead><tr><th>Company</th><th>LTP</th><th>Change</th><th>Market Cap</th><th>52W High/Low</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Reliance Industries</td><td>₹2,500.00</td><td class="up">+1.8%</td><td>₹17.5 Lakh Cr</td><td>₹2,650 / ₹2,100</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+      <tr><td>ONGC</td><td>₹185.50</td><td class="down">-0.45%</td><td>₹1.2 Lakh Cr</td><td>₹220 / ₹155</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Real Estate Sector -->
+<div class="sector-card" id="real-estate-sector">
+  <div class="sector-header">
+    <h3><i class="fas fa-building"></i> Real Estate Sector</h3>
+    <div class="sector-stats"><span class="stat-badge up">+0.7%</span> Market Cap: ₹8.7 Lakh Cr</div>
+  </div>
+  <table class="stocks-table">
+    <thead><tr><th>Company</th><th>LTP</th><th>Change</th><th>Market Cap</th><th>52W High/Low</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>DLF Ltd</td><td>₹450.60</td><td class="up">+1.1%</td><td>₹1.6 Lakh Cr</td><td>₹480 / ₹360</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+      <tr><td>Godrej Properties</td><td>₹1,500.25</td><td class="down">-0.4%</td><td>₹1.2 Lakh Cr</td><td>₹1,680 / ₹1,320</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FMCG Sector -->
+<div class="sector-card" id="fmcg-sector">
+  <div class="sector-header">
+    <h3><i class="fas fa-shopping-basket"></i> FMCG Sector</h3>
+    <div class="sector-stats"><span class="stat-badge down">-0.5%</span> Market Cap: ₹12.6 Lakh Cr</div>
+  </div>
+  <table class="stocks-table">
+    <thead><tr><th>Company</th><th>LTP</th><th>Change</th><th>Market Cap</th><th>52W High/Low</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Hindustan Unilever</td><td>₹2,450.70</td><td class="up">+0.6%</td><td>₹5.4 Lakh Cr</td><td>₹2,600 / ₹2,100</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+      <tr><td>ITC Ltd</td><td>₹415.40</td><td class="down">-0.2%</td><td>₹4.2 Lakh Cr</td><td>₹440 / ₹350</td><td><button class="btn btn-xs btn-outline">Trade</button></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <!-- Banking Sector -->
+<div class="sector-card" id="banking-sector">
+  <div class="sector-header">
+    <h3><i class="fas fa-university"></i> Banking Sector</h3>
+    <div class="sector-stats"><span class="stat-badge down">-0.3%</span> Market Cap: ₹45.2 Lakh Cr</div>
+  </div>
+  <table class="stocks-table">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>LTP</th>
+        <th>Change</th>
+        <th>Market Cap</th>
+        <th>52W High/Low</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>HDFC Bank</td>
+        <td>₹1,590.80</td>
+        <td class="up">+1.05%</td>
+        <td>₹12.5 Lakh Cr</td>
+        <td>₹1,710 / ₹1,400</td>
+        <td><button class="btn btn-xs btn-outline">Trade</button></td>
+      </tr>
+      <tr>
+        <td>ICICI Bank</td>
+        <td>₹925.60</td>
+        <td class="up">+0.45%</td>
+        <td>₹6.8 Lakh Cr</td>
+        <td>₹1,000 / ₹820</td>
+        <td><button class="btn btn-xs btn-outline">Trade</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  
+</div>
+        
+        <div class="sector-footer">
+          <a href="#" class="btn btn-primary">View All Stocks</a>
+        </div>
+      </div>
+      
+     
+        
+        <div class="sector-stocks">
+          <!-- Banking stocks data would be shown when expanded -->
+        </div>
+      </div>
+      
+      <!-- Other sectors would be added similarly -->
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Gainers & Losers Section -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gainers & Losers</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .gainers-losers-section {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+    
+    .section-header {
+      padding: 1.5rem;
+      color: white;
+      text-align: center;
+    }
+    
+    .section-header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .section-header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    
+    .gainers-losers-tabs {
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+      background-color: #f9fafb;
+    }
+    
+    .tab-btn {
+      flex: 1;
+      padding: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #6b7280;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .tab-btn:hover {
+      color: #2563eb;
+    }
+    
+    .tab-btn.active {
+      color: #2563eb;
+    }
+    
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: #2563eb;
+      border-radius: 3px 3px 0 0;
+    }
+    
+    .gainers-losers-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .filter-group label {
+      font-size: 0.9rem;
+      color: #4b5563;
+      font-weight: 500;
+    }
+    
+    .filter-select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background-color: #fff;
+      font-size: 0.9rem;
+      color: #1f2937;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+    
+    .filter-select:hover, .filter-select:focus {
+      border-color: #2563eb;
+      outline: none;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 1rem;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .stocks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    
+    .stock-card {
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      padding: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .stock-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stock-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    
+    .stock-name {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .stock-name img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: #f3f4f6;
+    }
+    
+    .stock-name div {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .stock-name strong {
+      font-size: 1rem;
+      color: #111827;
+    }
+    
+    .stock-name span {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    
+    .stock-price {
+      text-align: right;
+    }
+    
+    .current-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    
+    .price-change {
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+    
+    .up {
+      color: #10b981;
+    }
+    
+    .up .price-change {
+      background-color: rgba(16, 185, 129, 0.1);
+    }
+    
+    .down {
+      color: #ef4444;
+    }
+    
+    .down .price-change {
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+    
+    .stock-chart {
+      width: 100%;
+      height: 120px;
+      margin-bottom: 1rem;
+      background-color: #f3f4f6;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .stock-chart img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .stock-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .detail-item span:first-child {
+      color: #6b7280;
+    }
+    
+    .detail-item span:last-child {
+      font-weight: 500;
+      color: #111827;
+    }
+    
+    .stock-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+    
+    .btn-sm {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid #d1d5db;
+      color: #4b5563;
+    }
+    
+    .btn-outline:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+      background-color: rgba(37, 99, 235, 0.05);
+    }
+    
+    /* For simplified cards */
+    .simplified-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+    
+    .simplified-card strong {
+      font-size: 1rem;
+    }
+    
+    .simplified-card span {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    
+    .simplified-card .stock-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    
+    .simplified-card .price-change {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .stocks-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .gainers-losers-filters {
+        justify-content: space-between;
+      }
+      
+      .filter-group {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .stocks-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .gainers-losers-filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .filter-group {
+        min-width: auto;
+      }
+      
+      .stock-card {
+        padding: 0.75rem;
+      }
+      
+      .stock-header {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .stock-price {
+        text-align: left;
+      }
+      
+      .stock-actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+
+    /* Skeleton loading animation */
+    @keyframes shimmer {
+      0% {
+        background-position: -468px 0;
+      }
+      100% {
+        background-position: 468px 0;
+      }
+    }
+
+    .skeleton {
+      background: linear-gradient(to right, #f0f0f0 8%, #e0e0e0 18%, #f0f0f0 33%);
+      background-size: 800px 100px;
+      animation: shimmer 1.5s infinite linear;
+      border-radius: 4px;
+    }
+
+    .skeleton-card {
+      height: 120px;
+      margin-bottom: 12px;
+    }
+
+    /* Tooltip */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.8rem;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Dark mode */
+    .dark-mode {
+      background-color: #1a1c23;
+      color: #f9fafb;
+    }
+
+    .dark-mode .container {
+      background-color: #252731;
+    }
+
+    .dark-mode .section-header {
+      background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    }
+
+    .dark-mode .gainers-losers-tabs,
+    .dark-mode .gainers-losers-filters {
+      background-color: #1e2130;
+      border-color: #374151;
+    }
+
+    .dark-mode .tab-btn {
+      color: #9ca3af;
+    }
+
+    .dark-mode .tab-btn.active {
+      color: #60a5fa;
+    }
+
+    .dark-mode .tab-btn.active::after {
+      background-color: #60a5fa;
+    }
+
+    .dark-mode .filter-select {
+      background-color: #1e2130;
+      border-color: #374151;
+      color: #e5e7eb;
+    }
+
+    .dark-mode .stock-card {
+      background-color: #252731;
+      border-color: #374151;
+    }
+
+    .dark-mode .stock-name strong {
+      color: #f9fafb;
+    }
+
+    .dark-mode .stock-name span {
+      color: #9ca3af;
+    }
+
+    .dark-mode .detail-item span:first-child {
+      color: #9ca3af;
+    }
+
+    .dark-mode .detail-item span:last-child {
+      color: #e5e7eb;
+    }
+
+    .dark-mode .btn-outline {
+      border-color: #4b5563;
+      color: #9ca3af;
+    }
+
+    .dark-mode .btn-outline:hover {
+      border-color: #60a5fa;
+      color: #60a5fa;
+      background-color: rgba(96, 165, 250, 0.1);
+    }
+
+    .dark-mode .stock-chart {
+      background-color: #1e2130;
+    }
+
+    .dark-mode .skeleton {
+      background: linear-gradient(to right, #252731 8%, #2d303e 18%, #252731 33%);
+    }
+  </style>
+</head>
+<body>
+  <!-- Gainers & Losers Section -->
+  <section class="gainers-losers-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Top Gainers & Losers</h2>
+        <p>Track the market's biggest movers today</p>
+      </div>
+
+      <div class="gainers-losers-tabs">
+        <button class="tab-btn active" data-tab="gainers">Top Gainers</button>
+        <button class="tab-btn" data-tab="losers">Top Losers</button>
+      </div>
+
+      <div class="gainers-losers-filters">
+        <div class="filter-group">
+          <label for="time-filter">Time Period:</label>
+          <select class="filter-select" id="time-filter">
+            <option value="1h">1 Hour</option>
+            <option value="today" selected>Today</option>
+            <option value="1w">1 Week</option>
+            <option value="1m">1 Month</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="cap-filter">Market Cap:</label>
+          <select class="filter-select" id="cap-filter">
+            <option value="all" selected>All</option>
+            <option value="large">Large Cap</option>
+            <option value="mid">Mid Cap</option>
+            <option value="small">Small Cap</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="sector-filter">Sector:</label>
+          <select class="filter-select" id="sector-filter">
+            <option value="all" selected>All Sectors</option>
+            <option value="tech">Technology</option>
+            <option value="finance">Finance</option>
+            <option value="energy">Energy</option>
+            <option value="healthcare">Healthcare</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <button id="theme-toggle" class="btn btn-sm btn-outline">
+            <i class="fas fa-moon"></i> Dark Mode
+          </button>
+        </div>
+      </div>
+
+      <div class="gainers-losers-content">
+        <!-- Top Gainers Tab -->
+        <div class="tab-content active" id="gainers-content">
+          <div class="stocks-grid" id="gainers-grid">
+            <!-- Skeleton loading -->
+            <div class="stock-card skeleton skeleton-card"></div>
+            <div class="stock-card skeleton skeleton-card"></div>
+            <div class="stock-card skeleton skeleton-card"></div>
+            <div class="stock-card skeleton skeleton-card"></div>
+            <div class="stock-card skeleton skeleton-card"></div>
+            <div class="stock-card skeleton skeleton-card"></div>
+          </div>
+        </div>
+
+        <!-- Top Losers Tab -->
+        <div class="tab-content" id="losers-content">
+          <div class="stocks-grid" id="losers-grid">
+            <!-- Will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tab switching
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove active class from all buttons
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          // Add active class to clicked button
+          button.classList.add('active');
+          
+          // Hide all tab contents
+          tabContents.forEach(content => content.classList.remove('active'));
+          // Show the selected tab content
+          const tabId = button.getAttribute('data-tab');
+          document.getElementById(`${tabId}-content`).classList.add('active');
+        });
+      });
+
+      // Theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        // Update button text
+        if (document.body.classList.contains('dark-mode')) {
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        } else {
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+        }
+      });
+
+      // Filter change events
+      const timeFilter = document.getElementById('time-filter');
+      const capFilter = document.getElementById('cap-filter');
+      const sectorFilter = document.getElementById('sector-filter');
+      
+      const filters = [timeFilter, capFilter, sectorFilter];
+      filters.forEach(filter => {
+        filter.addEventListener('change', updateStocks);
+      });
+
+      // Stock data - in a real application, this would come from an API
+      const stockData = {
+        gainers: [
+          {
+            symbol: 'ADANIPORTS',
+            name: 'Adani Ports & SEZ',
+            price: '₹1,250.75',
+            change: '+8.45%',
+            marketCap: '₹2.7 Lakh Cr',
+            volume: '15.2 Lakh',
+            pe: '32.5',
+            sector: 'infrastructure',
+            cap: 'large'
+          },
+          {
+            symbol: 'RELIANCE',
+            name: 'Reliance Industries',
+            price: '₹2,320.45',
+            change: '+7.12%',
+            marketCap: '₹15.2 Lakh Cr',
+            volume: '42.6 Lakh',
+            pe: '27.3',
+            sector: 'energy',
+            cap: 'large'
+          },
+          {
+            symbol: 'TCS',
+            name: 'Tata Consultancy Services',
+            price: '₹3,412.65',
+            change: '+5.67%',
+            marketCap: '₹12.8 Lakh Cr',
+            volume: '8.4 Lakh',
+            pe: '29.8',
+            sector: 'tech',
+            cap: 'large'
+          },
+          {
+            symbol: 'INFY',
+            name: 'Infosys',
+            price: '₹1,485.30',
+            change: '+4.98%',
+            marketCap: '₹6.2 Lakh Cr',
+            volume: '12.1 Lakh',
+            pe: '24.6',
+            sector: 'tech',
+            cap: 'large'
+          },
+          {
+            symbol: 'HDFC',
+            name: 'HDFC Bank',
+            price: '₹1,621.90',
+            change: '+3.85%',
+            marketCap: '₹8.9 Lakh Cr',
+            volume: '14.8 Lakh',
+            pe: '21.5',
+            sector: 'finance',
+            cap: 'large'
+          },
+          {
+            symbol: 'WIPRO',
+            name: 'Wipro Ltd',
+            price: '₹645.10',
+            change: '+2.73%',
+            marketCap: '₹3.5 Lakh Cr',
+            volume: '10.2 Lakh',
+            pe: '20.3',
+            sector: 'tech',
+            cap: 'large'
+          }
+        ],
+        losers: [
+          {
+            symbol: 'YESBANK',
+            name: 'Yes Bank',
+            price: '₹13.45',
+            change: '-6.32%',
+            marketCap: '₹33,800 Cr',
+            volume: '28.4 Lakh',
+            pe: 'N/A',
+            sector: 'finance',
+            cap: 'small'
+          },
+          {
+            symbol: 'TATAMOTORS',
+            name: 'Tata Motors',
+            price: '₹402.75',
+            change: '-5.78%',
+            marketCap: '₹1.3 Lakh Cr',
+            volume: '16.7 Lakh',
+            pe: '18.2',
+            sector: 'auto',
+            cap: 'mid'
+          },
+          {
+            symbol: 'JSWSTEEL',
+            name: 'JSW Steel',
+            price: '₹742.60',
+            change: '-4.61%',
+            marketCap: '₹1.8 Lakh Cr',
+            volume: '9.3 Lakh',
+            pe: '15.7',
+            sector: 'materials',
+            cap: 'mid'
+          },
+          {
+            symbol: 'SBIN',
+            name: 'State Bank of India',
+            price: '₹583.30',
+            change: '-4.20%',
+            marketCap: '₹5.2 Lakh Cr',
+            volume: '22.9 Lakh',
+            pe: '13.4',
+            sector: 'finance',
+            cap: 'large'
+          },
+          {
+            symbol: 'IOC',
+            name: 'Indian Oil Corporation',
+            price: '₹98.45',
+            change: '-3.95%',
+            marketCap: '₹1.4 Lakh Cr',
+            volume: '18.5 Lakh',
+            pe: '9.8',
+            sector: 'energy',
+            cap: 'mid'
+          },
+          {
+            symbol: 'ITC',
+            name: 'ITC Ltd',
+            price: '₹423.15',
+            change: '-3.52%',
+            marketCap: '₹5.3 Lakh Cr',
+            volume: '15.1 Lakh',
+            pe: '23.6',
+            sector: 'consumer',
+            cap: 'large'
+          }
+        ]
+      };
+
+      // Function to update stocks based on filters
+      function updateStocks() {
+        const timeValue = timeFilter.value;
+        const capValue = capFilter.value;
+        const sectorValue = sectorFilter.value;
+        
+        // Clear existing stocks
+        document.getElementById('gainers-grid').innerHTML = '';
+        document.getElementById('losers-grid').innerHTML = '';
+        
+        // Apply filters to gainers
+        const filteredGainers = stockData.gainers.filter(stock => {
+          const matchesCap = capValue === 'all' || stock.cap === capValue;
+          const matchesSector = sectorValue === 'all' || stock.sector === sectorValue;
+          return matchesCap && matchesSector;
+        });
+        
+        // Apply filters to losers
+        const filteredLosers = stockData.losers.filter(stock => {
+          const matchesCap = capValue === 'all' || stock.cap === capValue;
+          const matchesSector = sectorValue === 'all' || stock.sector === sectorValue;
+          return matchesCap && matchesSector;
+        });
+        
+        // Render filtered stocks
+        renderStocks(filteredGainers, 'gainers-grid', 'up');
+        renderStocks(filteredLosers, 'losers-grid', 'down');
+      }
+
+      // Function to render stocks
+      function renderStocks(stocks, containerId, direction) {
+        const container = document.getElementById(containerId);
+        
+        if (stocks.length === 0) {
+          container.innerHTML = '<div class="no-results">No stocks match your filter criteria</div>';
+          return;
+        }
+        
+        stocks.forEach(stock => {
+          const stockCard = document.createElement('div');
+          stockCard.className = 'stock-card';
+          
+          // Create stock card content
+          stockCard.innerHTML = `
+            <div class="stock-header">
+              <div class="stock-name">
+                <img src="/api/placeholder/32/32" alt="${stock.name}">
+                <div>
+                  <strong>${stock.symbol}</strong>
+                  <span>${stock.name}</span>
+                </div>
+              </div>
+              <div class="stock-price ${direction}">
+                <div class="current-price">${stock.price}</div>
+                <div class="price-change">${stock.change}</div>
+              </div>
+            </div>
+            <div class="stock-chart">
+              <img src="/api/placeholder/280/120" alt="${stock.symbol} Chart">
+            </div>
+            <div class="stock-details">
+              <div class="detail-item">
+                <span>Market Cap</span>
+                <span>${stock.marketCap}</span>
+              </div>
+              <div class="detail-item">
+                <span>Volume</span>
+                <span>${stock.volume}</span>
+              </div>
+              <div class="detail-item">
+                <span>P/E Ratio</span>
+                <span>${stock.pe}</span>
+              </div>
+            </div>
+            <div class="stock-actions">
+              <button class="btn btn-sm btn-outline">Trade</button>
+              <button class="btn btn-sm btn-outline add-to-watchlist" data-symbol="${stock.symbol}">
+                <i class="far fa-star"></i> Add to Watchlist
+              </button>
+            </div>
+          `;
+          
+          container.appendChild(stockCard);
+        });
+        
+        // Add event listeners to watchlist buttons
+        document.querySelectorAll('.add-to-watchlist').forEach(button => {
+          button.addEventListener('click', function(e) {
+            const symbol = this.getAttribute('data-symbol');
+            addToWatchlist(symbol);
+            e.stopPropagation();
+          });
+        });
+        
+        // Make stock cards clickable
+        document.querySelectorAll('.stock-card').forEach(card => {
+          card.addEventListener('click', function() {
+            const symbol = this.querySelector('strong').textContent;
+            showStockDetails(symbol);
+          });
+        });
+      }
+
+      // Function to add stock to watchlist
+      function addToWatchlist(symbol) {
+        // In a real application, this would save to localStorage or a backend
+        console.log(`Added ${symbol} to watchlist`);
+        
+        // Show a notification
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = `Added ${symbol} to watchlist`;
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.right = '20px';
+        notification.style.padding = '10px 15px';
+        notification.style.backgroundColor = '#2563eb';
+        notification.style.color = 'white';
+        notification.style.borderRadius = '6px';
+        notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+        notification.style.zIndex = '1000';
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateY(20px)';
+        notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        
+        document.body.appendChild(notification);
+        
+        // Show the notification
+        setTimeout(() => {
+          notification.style.opacity = '1';
+          notification.style.transform = 'translateY(0)';
+        }, 10);
+        
+        // Remove the notification after 3 seconds
+        setTimeout(() => {
+          notification.style.opacity = '0';
+          notification.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
+
+      // Function to show stock details
+      function showStockDetails(symbol) {
+        // In a real application, this would navigate to a stock details page
+        console.log(`Showing details for ${symbol}`);
+        
+        // For demonstration, we'll just show an alert
+        alert(`Stock details for ${symbol} would be shown here`);
+      }
+
+      // Initialize the stock display
+      updateStocks();
+
+      // Add loading animation
+      setTimeout(() => {
+        updateStocks();
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
+<!-- this is the ending of the top gainers  -->
+
+
+
+
+
+<!-- Learning Section -->
+<section class="learning-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Learning Center</h2>
+      <p>Master the markets with our comprehensive educational resources</p>
+    </div>
+    
+    <div class="learning-filter">
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="basics">Basics</button>
+        <button class="filter-btn" data-filter="technical">Technical Analysis</button>
+        <button class="filter-btn" data-filter="fundamental">Fundamental Analysis</button>
+        <button class="filter-btn" data-filter="strategies">Trading Strategies</button>
+      </div>
+    </div>
+    
+    <div class="learning-resources-grid">
+      <!-- Basics Resources -->
+      <div class="resource-card basics">
+        <div class="resource-image">
+          <img src="/api/placeholder/640/360" alt="Stock Market Basics">
+          <div class="resource-type video"><i class="fas fa-play-circle"></i> Video</div>
+        </div>
+        <div class="resource-content">
+          <h3>Stock Market Basics</h3>
+          <p>Learn the fundamental concepts of stock markets, exchanges, and how trading works.</p>
+          <div class="resource-meta">
+            <span><i class="far fa-clock"></i> 15 minutes</span>
+            <span><i class="far fa-user"></i> Beginner</span>
+          </div>
+          <a href="#" class="btn btn-outline btn-sm">Watch Now</a>
+        </div>
+      </div>
+      
+      <div class="resource-card basics">
+        <div class="resource-image">
+          <img src="/api/placeholder/640/360" alt="Understanding P/E Ratio">
+          <div class="resource-type article"><i class="far fa-file-alt"></i> Article</div>
+        </div>
+        <div class="resource-content">
+          <h3>Understanding P/E Ratio</h3>
+          <p>Learn what price-to-earnings ratio means and how to use it for stock valuation.</p>
+          <div class="resource-meta">
+            <span><i class="far fa-clock"></i> 10 minutes</span>
+            <span><i class="far fa-user"></i> Beginner</span>
+          </div>
+          <a href="#" class="btn btn-outline btn-sm">Read Now</a>
+        </div>
+      </div>
+      
+      <!-- Technical Analysis Resources -->
+      <div class="resource-card technical">
+        <div class="resource-image">
+          <img src="/api/placeholder/640/360" alt="Candlestick Patterns">
+          <div class="resource-type interactive"><i class="fas fa-hand-pointer"></i> Interactive</div>
+        </div>
+        <div class="resource-content">
+          <h3>Candlestick Patterns</h3>
+          <p>Interactive guide to recognizing and interpreting different candlestick patterns.</p>
+          <div class="resource-meta">
+            <span><i class="far fa-clock"></i> 20 minutes</span>
+            <span><i class="far fa-user"></i> Intermediate</span>
+          </div>
+          <a href="#" class="btn btn-outline btn-sm">Start Learning</a>
+        </div>
+      </div>
+      
+      <div class="resource-card technical">
+        <div class="resource-image">
+          <img src="/api/placeholder/640/360" alt="Moving Averages">
+          <div class="resource-type video"><i class="fas fa-play-circle"></i> Video</div>
+        </div>
+        <div class="resource-content">
+          <h3>Moving Averages</h3>
+          <p>Learn how to use moving averages to identify trends and potential entry/exit points.</p>
+          <div class="resource-meta">
+            <span><i class="far fa-clock"></i> 25 minutes</span>
+            <span><i class="far fa-user"></i> Intermediate</span>
+          </div>
+          <a href="#" class="btn btn-outline btn-sm">Watch Now</a>
+        </div>
+      </div>
+      
+      <!-- Fundamental Analysis Resources -->
+      <div class="resource-card fundamental">
+        <div class="resource-image">
+          <img src="/api/placeholder/640/360" alt="Financial Statement Analysis">
+          <div class="resource-type webinar"><i class="fas fa-users"></i> Webinar</div>
+        </div>
+        <div class="resource-content">
+          <h3>Financial Statement Analysis</h3>
+          <p>Deep dive into analyzing company balance sheets, income statements, and cash flows.</p>
+          <div class="resource-meta">
+            <span><i class="far fa-clock"></i> 45 minutes</span>
+            <span><i class="far fa-user"></i> Advanced</span>
+          </div>
+          <a href="#" class="btn btn-outline btn-sm">Register</a>
+        </div>
+      </div>
+      
+      <!-- Trading Strategies Resources -->
+      <div class="resource-card strategies">
+        <div class="resource-image">
+          <img src="/api/placeholder/640/360" alt="Swing Trading Strategies">
+          <div class="resource-type course"><i class="fas fa-graduation-cap"></i> Course</div>
+        </div>
+        <div class="resource-content">
+          <h3>Swing Trading Strategies</h3>
+          <p>Complete course on swing trading methodologies, risk management, and execution.</p>
+          <div class="resource-meta">
+            <span><i class="far fa-clock"></i> 3 hours</span>
+            <span><i class="far fa-user"></i> Intermediate</span>
+          </div>
+          <a href="#" class="btn btn-outline btn-sm">Enroll</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="learning-footer">
+      <a href="learning-center.html" class="btn btn-primary">View All Resources</a>
+      <div class="upcoming-webinars">
+        <h4>Upcoming Live Webinars</h4>
+        <div class="webinar-item">
+          <div class="webinar-date">
+            <span class="day">25</span>
+            <span class="month">Mar</span>
+          </div>
+          <div class="webinar-info">
+            <h5>Options Trading Fundamentals</h5>
+            <p>By Rajesh Jain, Options Strategist</p>
+          </div>
+          <a href="#" class="btn btn-sm btn-outline">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <!-- Investment Plan Section -->
+  <section class="investment-plan-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Investment Plans</h2>
+        <p>Customize your investment strategy based on your financial goals and risk tolerance</p>
+      </div>
+      
+      <div class="investment-plans-grid">
+        <!-- Conservative Plan -->
+        <div class="plan-card">
+          <div class="plan-header conservative">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Conservative</h3>
+          </div>
+          <div class="plan-content">
+            <p>Low-risk investments focused on capital preservation with steady returns.</p>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 60% Large Cap Stocks</li>
+              <li><i class="fas fa-check"></i> 30% Blue Chip Companies</li>
+              <li><i class="fas fa-check"></i> 10% Government Bonds</li>
+            </ul>
+            <div class="plan-stats">
+              <div class="stat">
+                <span>Expected Return</span>
+                <h4>7-9%</h4>
+              </div>
+              <div class="stat">
+                <span>Risk Level</span>
+                <div class="risk-meter">
+                  <span class="filled"></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-block">Select Plan</button>
+          </div>
+        </div>
+        
+        <!-- Moderate Plan -->
+        <div class="plan-card">
+          <div class="plan-header moderate">
+            <i class="fas fa-balance-scale"></i>
+            <h3>Moderate</h3>
+          </div>
+          <div class="plan-content">
+            <p>Balanced approach with a mix of growth and stability-focused investments.</p>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 40% Large Cap Stocks</li>
+              <li><i class="fas fa-check"></i> 40% Mid Cap Growth</li>
+              <li><i class="fas fa-check"></i> 20% Sector ETFs</li>
+            </ul>
+            <div class="plan-stats">
+              <div class="stat">
+                <span>Expected Return</span>
+                <h4>10-14%</h4>
+              </div>
+              <div class="stat">
+                <span>Risk Level</span>
+                <div class="risk-meter">
+                  <span class="filled"></span>
+                  <span class="filled"></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-block">Select Plan</button>
+          </div>
+        </div>
+        
+        <!-- Aggressive Plan -->
+        <div class="plan-card">
+          <div class="plan-header aggressive">
+            <i class="fas fa-rocket"></i>
+            <h3>Aggressive</h3>
+          </div>
+          <div class="plan-content">
+            <p>Growth-oriented strategy focusing on high-potential stocks and sectors.</p>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> 30% Mid Cap Growth</li>
+              <li><i class="fas fa-check"></i> 40% Small Cap Potential</li>
+              <li><i class="fas fa-check"></i> 30% Emerging Sectors</li>
+            </ul>
+            <div class="plan-stats">
+              <div class="stat">
+                <span>Expected Return</span>
+                <h4>15-20%</h4>
+              </div>
+              <div class="stat">
+                <span>Risk Level</span>
+                <div class="risk-meter">
+                  <span class="filled"></span>
+                  <span class="filled"></span>
+                  <span class="filled"></span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-block">Select Plan</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="custom-plan-creator">
+        <div class="custom-plan-header">
+          <h3>Create Custom Plan</h3>
+          <p>Build your own investment strategy based on your specific goals</p>
+        </div>
+        
+        <div class="custom-plan-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Investment Goal</label>
+              <select class="form-control">
+                <option>Retirement</option>
+                <option>Short-term Growth</option>
+                <option>Regular Income</option>
+                <option>Tax Saving</option>
+                <option>Wealth Creation</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Investment Horizon</label>
+              <select class="form-control">
+                <option>Less than 1 year</option>
+                <option>1-3 years</option>
+                <option>3-5 years</option>
+                <option>5-10 years</option>
+                <option>More than 10 years</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Risk Tolerance</label>
+              <div class="range-slider">
+                <input type="range" min="1" max="10" value="5" class="slider" id="riskRange">
+                <div class="range-labels">
+                  <span>Low</span>
+                  <span>Medium</span>
+                  <span>High</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Monthly SIP Amount</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">₹</span>
+                </div>
+                <input type="number" class="form-control" placeholder="5000" min="500">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Initial Investment</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">₹</span>
+                </div>
+                <input type="number" class="form-control" placeholder="25000" min="1000">
+              </div>
+            </div>
+          </div>
+          
+          <button class="btn btn-primary">Generate Custom Plan</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+
+
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Choose ProTrade</h2>
+        <p>Experience advanced trading features designed for both beginners and professionals</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Real-Time Data</h3>
+          <p>Access live market data with minimal delay to make informed trading decisions</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>AI Insights</h3>
+          <p>Get AI-powered stock recommendations and market analysis</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Learning Resources</h3>
+          <p>Access tutorials, webinars, and articles to improve your trading strategies</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Risk-Free</h3>
+          <p>Trade with virtual currency and practice without financial risk</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add Chart Section -->
+  <section class="chart-overview">
+    <div class="container">
+        <div class="section-header">
+            <h2>Live Market Overview</h2>
+            <p>Practice with real-time market data</p>
+        </div>
+        
+        <div class="chart-container">
+            <!-- Add button to show chart -->
+            <div class="chart-button-container">
+                <button id="showChartBtn" class="btn btn-primary">
+                    <i class="fas fa-chart-line"></i> Show Live Chart
+                </button>
+            </div>
+
+            <div id="chartWrapper" class="chart-wrapper" style="display: none;">
+                <!-- Add close button -->
+                <button id="closeChartBtn" class="close-chart-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_chart"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                    function initChart() {
+                        new TradingView.widget({
+                            "width": "100%",
+                            "height": 500,
+                            "symbol": "NASDAQ:AAPL",
+                            "interval": "D",
+                            "timezone": "Asia/Kolkata",
+                            "theme": "light",
+                            "style": "1",
+                            "locale": "en",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_chart",
+                            "studies": [
+                                "MASimple@tv-basicstudies",
+                                "RSI@tv-basicstudies"
+                            ],
+                            "show_popup_button": true,
+                            "popup_width": "1000",
+                            "popup_height": "650",
+                            "watchlist": [
+                                // US Tech Giants
+                                "NASDAQ:AAPL",
+                                "NASDAQ:MSFT",
+                                "NASDAQ:GOOGL",
+                                "NASDAQ:AMZN",
+                                "NASDAQ:META",
+                                "NASDAQ:NVDA",
+                                "NYSE:TSLA",
+                                // US Financial
+                                "NYSE:JPM",
+                                "NYSE:BAC",
+                                "NYSE:GS",
+                                // US Healthcare
+                                "NYSE:JNJ",
+                                "NYSE:PFE",
+                                // US Retail
+                                "NYSE:WMT",
+                                "NYSE:HD",
+                                // Indian Stocks
+                                "NSE:NIFTY",
+                                "BSE:SENSEX",
+                                "NSE:RELIANCE",
+                                "NSE:TCS"
+                            ]
+                        });
+                    }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+
+                <!-- Quick symbols -->
+                <div class="quick-symbols">
+                    <!-- US Tech -->
+                    <button class="symbol-btn active" data-symbol="NASDAQ:AAPL">APPLE</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:MSFT">MICROSOFT</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:GOOGL">GOOGLE</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:AMZN">AMAZON</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:META">META</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:NVDA">NVIDIA</button>
+                    <button class="symbol-btn" data-symbol="NYSE:TSLA">TESLA</button>
+                    
+                    <!-- US Market Indices -->
+                    <button class="symbol-btn" data-symbol="FOREXCOM:SPXUSD">S&P 500</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:NDX">NASDAQ 100</button>
+                    <button class="symbol-btn" data-symbol="DJ:DJI">DOW JONES</button>
+                    
+                    <!-- Indian Market -->
+                    <button class="symbol-btn" data-symbol="NSE:NIFTY">NIFTY 50</button>
+                    <button class="symbol-btn" data-symbol="BSE:SENSEX">SENSEX</button>
+                    <button class="symbol-btn" data-symbol="NSE:BANKNIFTY">BANK NIFTY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <!-- Market Section -->
+  <section class="market-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Explore The Market</h2>
+        <p>Stay updated with the latest market trends and opportunities</p>
+      </div>
+      
+      <div class="market-grid">
+        <div class="market-card">
+          <div class="video-container">
+            <video autoplay loop muted playsinline>
+              <source src="stock.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="overlay">
+              <h3>Market Analysis</h3>
+              <p>Discover emerging trends and investment opportunities</p>
+              <a href="market.html" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="market-card">
+          <div class="market-content" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('landing.png')">
+            <h3>Top Performers</h3>
+            <div class="stock-list">
+              <div class="stock-item up">
+                <div class="stock-name">HDFC Bank</div>
+                <div class="stock-price">₹1,620.50</div>
+                <div class="stock-change">+1.20%</div>
+              </div>
+              <div class="stock-item up">
+                <div class="stock-name">Reliance</div>
+                <div class="stock-price">₹2,500.00</div>
+                <div class="stock-change">+1.50%</div>
+              </div>
+              <div class="stock-item up">
+                <div class="stock-name">Infosys</div>
+                <div class="stock-price">₹1,550.85</div>
+                <div class="stock-change">+0.85%</div>
+              </div>
+              <div class="stock-item up">
+                <div class="stock-name">TCS</div>
+                <div class="stock-price">₹3,600.75</div>
+                <div class="stock-change">+0.75%</div>
+              </div>
+            </div>
+            <a href="watchlist.html" class="btn btn-primary btn-sm">View All</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+        <div class="section-header">
+            <h2>What People Say About Us</h2>
+            <p>Trusted by thousands of traders worldwide</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <!-- Keep existing first two review cards -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">★★★★★</div>
+                <p class="testimonial-text">"ProTrade has completely transformed my trading journey. The real-time analytics and user-friendly interface make trading decisions much easier."</p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>Abhishek Rajbhar</h4>
+                        <span>IT Student</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-rating">★★★★★</div>
+                <p class="testimonial-text">"The educational resources and community support here are outstanding. I've learned more in 3 months than I did in a year of self-study."</p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>Mahesh Patil</h4>
+                        <span>Day Trader</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Container for new dynamic reviews -->
+            <div id="dynamicReviews"></div>
+        </div>
+
+        <!-- Show More Button -->
+        <div class="show-more-container">
+            <button id="showMoreReviews" class="btn btn-outline">
+                Show More Reviews <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Meet Our Team</h2>
+        <p>The talented minds behind ProTrade's innovation and development</p>
+      </div>
+      
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-image">
+            <img src="ayush.jpg" alt="Ayush">
+            <div class="social-links">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="https://github.com/Ayush200629"><i class="fab fa-github"></i></a>
+              <a href="https://www.instagram.com/ayush_20069?igsh=MXBxaGZwanU0OGxnbw=="><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h3>Ayush</h3>
+            <p class="member-role">Student</p>
+            <p class="member-bio">Passionate about creating intuitive financial technologies and democratizing access to market information.</p>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-image">
+            <img src="sachin.jpg" alt="Sachin">
+            <div class="social-links">
+              <a href="https://x.com/Sachin_S_001?t=zTsd-T9c2LizAvl3biUmRg&s=09"><i class="fab fa-twitter"></i></a>
+              <a href="https://github.com/Sachin844123"><i class="fab fa-github"></i></a>
+              <a href="https://www.instagram.com/__sachin__84/"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h3>Sachin</h3>
+            <p class="member-role">Student</p>
+            <p class="member-bio">Focused on creating seamless user experiences that make complex trading concepts accessible to everyone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Start Your Trading Journey?</h2>
+        <p>Join ProTrade today and get access to powerful tools, real-time data, and a risk-free environment to master your trading skills.</p>
+        <button class="btn btn-large btn-primary" onclick="location.href='sign.html'">
+          <a href="signin.html" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+            Create Free Account
+          </a>
+      </button>
+      
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <h3><i class="fas fa-chart-line"></i> ProTrade</h3>
+            <p>Your ultimate platform for learning stock trading with virtual money. Practice, learn, and master the art of trading without financial risk.</p>
+            <div class="social-icons">
+              <a href="https://x.com/Sachin_S_001?t=zTsd-T9c2LizAvl3biUmRg&s=09"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.instagram.com/__sachin__84/"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          
+          <div class="footer-links">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="learn.html">About Us</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="press.html">Press</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-links">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="learn.html">Learning Center</a></li>
+              <li><a href="webinars.html">Webinars</a></li>
+              <li><a href="api.html">API</a></li>
+              <li><a href="glossary.html">Glossary</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-links">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="help.html">Help Center</a></li>
+              <li><a href="faq.html">FAQs</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="community.html">Community</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-newsletter">
+            <h4>Stay Updated</h4>
+            <p>Subscribe to our newsletter for the latest market insights and platform updates.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Your email address" required>
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="footer-bottom-content">
+          <p>&copy; 2025 ProTrade. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="disclaimer.html">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  
+  <!-- Modal for Video Demo -->
+  <div id="demo-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="video-wrapper">
+        <iframe width="560" height="315" src="about:blank" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile Menu Toggle - Fixed Implementation
+      const mobileMenu = document.getElementById('mobile-menu');
+      const navMenu = document.querySelector('.nav-menu');
+      
+      if (mobileMenu && navMenu) {
+        mobileMenu.addEventListener('click', function(e) {
+          e.stopPropagation();
+          this.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a menu item
+        const menuItems = navMenu.querySelectorAll('a');
+        menuItems.forEach(item => {
+          item.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+          });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+          if (!event.target.closest('.nav-menu') && !event.target.closest('#mobile-menu')) {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        }
+    });
+  }
+
+    // Indices Tab Functionality
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Show corresponding content
+            const tabId = button.getAttribute('data-tab');
+            document.getElementById(`${tabId}-indices`).classList.add('active');
+            document.getElementById(`${tabId}-content`)?.classList.add('active');
+        });
+    });
+
+    // Sector Filter Functionality
+    const sectorButtons = document.querySelectorAll('.sector-btn');
+    const sectorCards = document.querySelectorAll('.sector-card');
+    
+    sectorButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            sectorButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Filter sectors
+            const sector = button.getAttribute('data-sector');
+            
+            if (sector === 'all') {
+                sectorCards.forEach(card => card.style.display = 'block');
+            } else {
+                sectorCards.forEach(card => {
+                    if (card.id === `${sector}-sector`) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        });
+    });
+
+    // Learning Resources Filter
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const resourceCards = document.querySelectorAll('.resource-card');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Filter resources
+            const filter = button.getAttribute('data-filter');
+            
+            if (filter === 'all') {
+                resourceCards.forEach(card => card.style.display = 'block');
+            } else {
+                resourceCards.forEach(card => {
+                    if (card.classList.contains(filter)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        });
+    });
+
+    // Risk Range Slider
+    const riskRange = document.getElementById('riskRange');
+    if(riskRange) {
+        riskRange.addEventListener('input', function() {
+            // Update visual representation based on slider value
+            const value = this.value;
+            const colors = ['#4CAF50', '#FFC107', '#FF5722']; // Green, Yellow, Red
+            let color;
+            
+            if (value <= 3) {
+                color = colors[0]; // Low risk - Green
+            } else if (value <= 7) {
+                color = colors[1]; // Medium risk - Yellow
+            } else {
+                color = colors[2]; // High risk - Red
+            }
+            
+            this.style.background = `linear-gradient(to right, ${color} ${value * 10}%, #ddd ${value * 10}%)`;
+        });
+        
+        // Trigger initial styling
+        riskRange.dispatchEvent(new Event('input'));
+    }
+
+    // Add to Watchlist Functionality
+    const watchlistButtons = document.querySelectorAll('.add-watchlist');
+    
+    watchlistButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const starIcon = this.querySelector('i');
+            
+            if (starIcon.classList.contains('far')) {
+                // Add to watchlist
+                starIcon.classList.remove('far');
+                starIcon.classList.add('fas');
+                showNotification('Added to watchlist!', 'success');
+            } else {
+                // Remove from watchlist
+                starIcon.classList.remove('fas');
+                starIcon.classList.add('far');
+                showNotification('Removed from watchlist', 'info');
+            }
+        });
+    });
+
+    // Demo Video Modal
+    const watchDemoButton = document.querySelector('.watch-demo');
+    
+    if (watchDemoButton) {
+        watchDemoButton.addEventListener('click', function() {
+            createModal('Watch Demo', `
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                        <p>Demo video would play here</p>
+                    </div>
+                </div>
+            `);
+        });
+    }
+
+    // Sector Header Click to Toggle Content (Mobile Responsive)
+    const sectorHeaders = document.querySelectorAll('.sector-header');
+    
+    sectorHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            // Only toggle on mobile view
+            if (window.innerWidth < 768) {
+                const sectorCard = this.closest('.sector-card');
+                const sectorStocks = sectorCard.querySelector('.sector-stocks');
+                
+                sectorCard.classList.toggle('collapsed');
+                
+                if (sectorStocks) {
+                    if (sectorCard.classList.contains('collapsed')) {
+                        sectorStocks.style.maxHeight = '0';
+                    } else {
+                        sectorStocks.style.maxHeight = sectorStocks.scrollHeight + 'px';
+                    }
+                }
+            }
+        });
+    });
+
+    // Stock Ticker Animation (Continuous Scrolling)
+    const ticker = document.querySelector('.ticker');
+    if (ticker) {
+        // Clone ticker items to create seamless loop
+        const tickerItems = document.querySelectorAll('.ticker-item');
+        tickerItems.forEach(item => {
+            const clone = item.cloneNode(true);
+            ticker.appendChild(clone);
+        });
+    }
+
+    // Live Market Data Simulation
+    simulateMarketData();
+    setInterval(simulateMarketData, 5000); // Update every 5 seconds
+    
+    // Initialize custom plan creator with default values
+    initCustomPlanCreator();
+    
+    // Initialize gainers & losers tabs
+    initGainersLosers();
+});
+
+// Helper Functions
+
+// Create Modal
+function createModal(title, content) {
+    // Remove any existing modals
+    const existingModal = document.querySelector('.modal-overlay');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Create modal elements
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    
+    const modalContainer = document.createElement('div');
+    modalContainer.className = 'modal-container';
+    
+    modalContainer.innerHTML = `
+        <div class="modal-header">
+            <h3>${title}</h3>
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-content">
+            ${content}
+        </div>
+    `;
+    
+    modalOverlay.appendChild(modalContainer);
+    document.body.appendChild(modalOverlay);
+    
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
+    
+    // Add close functionality
+    const closeButton = modalContainer.querySelector('.modal-close');
+    closeButton.addEventListener('click', () => {
+        modalOverlay.remove();
+        document.body.style.overflow = '';
+    });
+    
+    // Close when clicking outside the modal
+    modalOverlay.addEventListener('click', (event) => {
+        if (event.target === modalOverlay) {
+            modalOverlay.remove();
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Show modal with animation
+    setTimeout(() => {
+        modalOverlay.classList.add('active');
+    }, 10);
+}
+
+// Show Notification
+function showNotification(message, type = 'info') {
+    // Remove any existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => {
+        notification.remove();
+    });
+    
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    
+    let icon;
+    switch (type) {
+        case 'success':
+            icon = '<i class="fas fa-check-circle"></i>';
+            break;
+        case 'warning':
+            icon = '<i class="fas fa-exclamation-triangle"></i>';
+            break;
+        case 'error':
+            icon = '<i class="fas fa-times-circle"></i>';
+            break;
+        default:
+            icon = '<i class="fas fa-info-circle"></i>';
+    }
+    
+    notification.innerHTML = `
+        ${icon}
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Show notification with animation
+    setTimeout(() => {
+        notification.classList.add('active');
+    }, 10);
+    
+    // Remove notification after a delay
+    setTimeout(() => {
+        notification.classList.remove('active');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Simulate Market Data Updates
+function simulateMarketData() {
+    // Update stock prices and changes
+    const stockPrices = document.querySelectorAll('.index-value, .current-price');
+    
+    stockPrices.forEach(price => {
+        const currentValue = parseFloat(price.textContent.replace(/[^\d.-]/g, ''));
+        const changePercent = (Math.random() * 2 - 1) * 0.5; // Random change between -0.5% and +0.5%
+        const newValue = currentValue * (1 + changePercent / 100);
+        
+        if (price.textContent.includes('₹')) {
+            price.textContent = '₹' + newValue.toFixed(2);
+        } else {
+            price.textContent = newValue.toFixed(2);
+        }
+        
+        // Update corresponding change indicators if they exist
+        const parentCard = price.closest('.index-card, .stock-card');
+        if (parentCard) {
+            const changeElement = parentCard.querySelector('.stat-item, .price-change');
+            if (changeElement) {
+                const isPositive = changePercent > 0;
+                
+                // Remove existing up/down classes
+                changeElement.classList.remove('up', 'down');
+                
+                // Add appropriate class
+                changeElement.classList.add(isPositive ? 'up' : 'down');
+                
+                // Update icon if it exists
+                const icon = changeElement.querySelector('i');
+                if (icon) {
+                    icon.className = isPositive ? 'fas fa-arrow-up' : 'fas fa-arrow-down';
+                }
+                
+                // Update text if it includes a percentage
+                if (changeElement.textContent.includes('%')) {
+                    changeElement.textContent = (isPositive ? '+' : '') + changePercent.toFixed(2) + '%';
+                }
+            }
+        }
+    });
+}
+
+// Initialize Custom Plan Creator
+function initCustomPlanCreator() {
+    const generatePlanButton = document.querySelector('.custom-plan-form .btn-primary');
+    
+    if (generatePlanButton) {
+        generatePlanButton.addEventListener('click', function() {
+            // Get form values
+            const goal = document.querySelector('.custom-plan-form select:nth-of-type(1)').value;
+            const horizon = document.querySelector('.custom-plan-form select:nth-of-type(2)').value;
+            const risk = document.getElementById('riskRange').value;
+            const sipAmount = document.querySelectorAll('.custom-plan-form input[type="number"]')[0].value;
+            const initialInvestment = document.querySelectorAll('.custom-plan-form input[type="number"]')[1].value;
+            
+            // Generate plan based on inputs
+            const planDetails = generateInvestmentPlan(goal, horizon, risk, sipAmount, initialInvestment);
+            
+            // Display plan in modal
+            createModal('Your Custom Investment Plan', `
+                <div class="custom-plan-result">
+                    <div class="plan-summary">
+                        <h4>Plan Summary</h4>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <span>Investment Goal</span>
+                                <strong>${goal}</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>Time Horizon</span>
+                                <strong>${horizon}</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>Risk Profile</span>
+                                <strong>${getRiskText(risk)}</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>Monthly SIP</span>
+                                <strong>₹${sipAmount}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-allocation">
+                        <h4>Recommended Asset Allocation</h4>
+                        <div class="allocation-chart">
+                            ${planDetails.allocationHTML}
+                        </div>
+                    </div>
+                    
+                    <div class="expected-returns">
+                        <h4>Projected Returns</h4>
+                        <p>Based on historical performance and your investment parameters:</p>
+                        <div class="returns-grid">
+                            <div class="return-item">
+                                <div class="return-value">₹${planDetails.projectedValue}</div>
+                                <div class="return-label">Projected Value</div>
+                            </div>
+                            <div class="return-item">
+                                <div class="return-value">${planDetails.expectedReturn}%</div>
+                                <div class="return-label">Expected Annual Return</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="plan-actions">
+                        <button class="btn btn-primary">Save Plan</button>
+                        <button class="btn btn-outline">Modify Plan</button>
+                    </div>
+                </div>
+            `);
+        });
+    }
+}
+
+// Generate Investment Plan based on user inputs
+function generateInvestmentPlan(goal, horizon, risk, sipAmount, initialInvestment) {
+    // Convert string inputs to numbers
+    sipAmount = parseInt(sipAmount) || 5000;
+    initialInvestment = parseInt(initialInvestment) || 25000;
+    risk = parseInt(risk) || 5;
+    
+    // Calculate asset allocation based on risk
+    let equity, debt, gold, alternativeInvestments;
+    
+    if (risk <= 3) {
+        // Conservative
+        equity = 30 + (risk * 5);
+        debt = 60 - (risk * 5);
+        gold = 10;
+        alternativeInvestments = 0;
+    } else if (risk <= 7) {
+        // Moderate
+        equity = 45 + ((risk - 3) * 5);
+        debt = 45 - ((risk - 3) * 5);
+        gold = 5;
+        alternativeInvestments = 5;
+    } else {
+        // Aggressive
+        equity = 65 + ((risk - 7) * 5);
+        debt = 25 - ((risk - 7) * 5);
+        gold = 5;
+        alternativeInvestments = 5 + ((risk - 7) * 2);
+    }
+    
+    // Ensure non-negative values
+    debt = Math.max(0, debt);
+    
+    // Calculate expected return based on allocation
+    const equityReturn = 12; // Average annual return for equity
+    const debtReturn = 7;    // Average annual return for debt
+    const goldReturn = 8;    // Average annual return for gold
+    const altReturn = 15;    // Average annual return for alternative investments
+    
+    const expectedReturn = (
+        (equity * equityReturn) +
+        (debt * debtReturn) +
+        (gold * goldReturn) +
+        (alternativeInvestments * altReturn)
+    ) / 100;
+    
+    // Generate HTML for allocation chart
+    const allocationHTML = `
+        <div class="allocation-bars">
+            <div class="allocation-bar">
+                <div class="bar-fill equity" style="width: ${equity}%"></div>
+                <div class="bar-label">Equity: ${equity}%</div>
+            </div>
+            <div class="allocation-bar">
+                <div class="bar-fill debt" style="width: ${debt}%"></div>
+                <div class="bar-label">Debt: ${debt}%</div>
+            </div>
+            <div class="allocation-bar">
+                <div class="bar-fill gold" style="width: ${gold}%"></div>
+                <div class="bar-label">Gold: ${gold}%</div>
+            </div>
+            <div class="allocation-bar">
+                <div class="bar-fill alt" style="width: ${alternativeInvestments}%"></div>
+                <div class="bar-label">Alternative: ${alternativeInvestments}%</div>
+            </div>
+        </div>
+    `;
+    
+    // Calculate projected value
+    let timeYears = 5; // Default
+    if (horizon === "Less than 1 year") {
+        timeYears = 1;
+    } else if (horizon === "1-3 years") {
+        timeYears = 3;
+    } else if (horizon === "3-5 years") {
+        timeYears = 5;
+    } else if (horizon === "5-10 years") {
+        timeYears = 10;
+    } else if (horizon === "More than 10 years") {
+        timeYears = 20;
+    }
+    
+    const monthlyRate = expectedReturn / 100 / 12;
+    const months = timeYears * 12;
+    
+    // Future value formula: FV = P(1+r)^n + PMT × ((1+r)^n - 1) / r
+    // Where P = initial investment, r = monthly rate, n = months, PMT = monthly SIP
+    const projectedValue = initialInvestment * Math.pow(1 + monthlyRate, months) + 
+                          sipAmount * (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate;
+    
+    return {
+        allocationHTML,
+        expectedReturn: expectedReturn.toFixed(2),
+        projectedValue: Math.round(projectedValue).toLocaleString(),
+        timeYears
+    };
+}
+
+// Get text description of risk level
+function getRiskText(risk) {
+    if (risk <= 3) {
+        return "Conservative";
+    } else if (risk <= 7) {
+        return "Moderate";
+    } else {
+        return "Aggressive";
+    }
+}
+
+// Initialize Gainers & Losers tabs
+function initGainersLosers() {
+    const gainersLosersButtons = document.querySelectorAll('.gainers-losers-tabs .tab-btn');
+    const gainersLosersContents = document.querySelectorAll('.gainers-losers-content .tab-content');
+    
+    gainersLosersButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons and contents
+            gainersLosersButtons.forEach(btn => btn.classList.remove('active'));
+            gainersLosersContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Show corresponding content
+            const tabId = button.getAttribute('data-tab');
+            document.getElementById(`${tabId}-content`).classList.add('active');
+        });
+    });
+    
+    // Time period and market cap filters functionality
+    const timeFilter = document.getElementById('time-filter');
+    const capFilter = document.getElementById('cap-filter');
+    
+    if (timeFilter && capFilter) {
+        [timeFilter, capFilter].forEach(filter => {
+            filter.addEventListener('change', () => {
+                // This would normally fetch new data from the server
+                // For now, we'll simulate with a loading indicator
+                
+                const activeTab = document.querySelector('.gainers-losers-content .tab-content.active');
+                
+                // Add loading state
+                activeTab.classList.add('loading');
+                activeTab.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div>';
+                
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    // Reset content after "loading"
+                    activeTab.classList.remove('loading');
+                    activeTab.innerHTML = `<div class="stocks-grid">
+                        <div class="stock-card"><strong>FILTERED</strong><span>Filtered Results</span><div class="stock-price up">₹1,250.75</div><div class="price-change">+${Math.random() * 10}%</div></div>
+                        <div class="stock-card"><strong>RESULTS</strong><span>Based on Selection</span><div class="stock-price up">₹2,320.45</div><div class="price-change">+${Math.random() * 10}%</div></div>
+                        <div class="stock-card"><strong>TIME</strong><span>${timeFilter.value}</span><div class="stock-price up">₹3,412.65</div><div class="price-change">+${Math.random() * 10}%</div></div>
+                        <div class="stock-card"><strong>CAP</strong><span>${capFilter.value}</span><div class="stock-price up">₹1,485.30</div><div class="price-change">+${Math.random() * 10}%</div></div>
+                    </div>`;
+                }, 1500);
+            });
+        });
+    }
+}
+
+
+// Call dynamic styles function when DOM content is loaded
+document.addEventListener('DOMContentLoaded', addDynamicStyles);
+
+// Handle window resize events for responsive behavior
+window.addEventListener('resize', function() {
+    // Handle sector cards collapse state on resize
+    const sectorCards = document.querySelectorAll('.sector-card');
+    
+    sectorCards.forEach(card => {
+        const sectorStocks = card.querySelector('.sector-stocks');
+        
+        if (sectorStocks) {
+            if (window.innerWidth >= 768) {
+                // On desktop, make sure all content is visible
+                sectorStocks.style.maxHeight = '';
+                card.classList.remove('collapsed');
+            } else {
+                // On mobile, maintain collapsed state but fix height
+                if (card.classList.contains('collapsed')) {
+                    sectorStocks.style.maxHeight = '0';
+                } else {
+                    sectorStocks.style.maxHeight = sectorStocks.scrollHeight + 'px';
+                }
+            }
+        }
+    });
+});
+
+// Enhance scroll experience (smooth scrolling)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80, // Account for fixed header
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+
+  </script>
+</body>
+</html>
